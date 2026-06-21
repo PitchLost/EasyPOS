@@ -10,7 +10,7 @@ public class Item {
     ArrayList<String> itemOptions = new ArrayList<>();
 
     public Item(int itemId, String itemName, BigDecimal itemPrice, int defaultQty, ArrayList<String> itemOptions) {
-        this.itemId = itemId;
+        this.itemId = itemId; // FIXME: Is this even used??
         this.itemName = itemName;
         this.itemPrice = itemPrice;
         this.defaultQty = defaultQty;

@@ -46,4 +46,8 @@ public class OrderItem {
     public BigDecimal getItemPrice() {
         return itemPrice;
     }
+
+    public String getItemName() {
+        return itemName;
+    }
 }

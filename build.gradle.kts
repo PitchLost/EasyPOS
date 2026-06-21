@@ -4,6 +4,17 @@ plugins {
     id("org.openjfx.javafxplugin") version "0.1.0"
 }
 
+javafx {
+    version = "21"
+    // Kotlin DSL uses modules() function call notation
+    modules("javafx.controls", "javafx.fxml")
+}
+
+application {
+    // Replace with your actual package and main class name
+    mainClass.set("App")
+}
+
 group = "org.example"
 version = "1.0-SNAPSHOT"
 

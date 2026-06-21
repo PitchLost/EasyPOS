@@ -17,6 +17,10 @@ public class HomeService {
     public void init() {
         // TODO:
         // Get cached orders and update orders array
+
+        // If no orders exist already create an order and select it
+        newOrder();
+        selectOrder(orders.get(0));
     }
 
     void debugPrint(String message) {
@@ -25,24 +29,30 @@ public class HomeService {
         }
     }
 
-    // Main add item to order, Calls the addItem method for the relvant order object
-    void addItem(Item item) {
+
+    //TODO:
+    // Go to settings
+    // Pay for order
+
+    // Main add item to order, Calls the addItem method for the relevant order object
+    public void addItem(Item item) {
         Order currentOrder = orders.get(orderIndex);
         currentOrder.addItem(item);
     }
 
-    // Main void item from order, calls the voidItem method for the relevant oder object
-    void voidItem(Item item) {
+    // Main void item from order, calls the voidItem method for the relevant order object
+    public void voidItem(Item item) {
         Order currentOrder = orders.get(orderIndex);
         currentOrder.voidItem(item);
     }
 
-    //TODO:
-    // Edit name
-    // Go to settings
-    // Pay for order
+    public ArrayList<OrderItem> getCurrentOrderItems() {
+        Order currentOrder = orders.get(orderIndex);
+        return currentOrder.getOrderItems();
+    }
 
-    void newOrder() {
+
+    public void newOrder() {
         debugPrint("New Order");
         // Create new order and add it to the orders ArrayList
         Order newOrder = new Order(orders.size(), "No Name");
@@ -54,7 +64,7 @@ public class HomeService {
         selectOrder(newOrder);
     }
 
-    void selectOrder(Order order) {
+    public void selectOrder(Order order) {
         debugPrint("Select Order");
         orderIndex = order.getOrderIndex();
         // TODO: Send some sort of UI update
