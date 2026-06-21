@@ -20,7 +20,7 @@ public class Item {
 
 
     public String getName() {
-        return "";
+        return itemName;
     }
 
     public int getId() {

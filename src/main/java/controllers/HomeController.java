@@ -1,5 +1,6 @@
 package controllers;
 
+import javafx.scene.layout.FlowPane;
 import models.Item;
 import models.OrderItem;
 import services.HomeService;
@@ -22,7 +23,7 @@ public class HomeController implements Initializable {
     ArrayList<Item> items;
 
     @FXML private ScrollPane itemScrollPane;
-    @FXML private VBox itemContainer;
+    @FXML private FlowPane itemContainer;
 
     @FXML private ScrollPane orderScrollPane;
     @FXML private VBox orderContainer;
@@ -34,15 +35,24 @@ public class HomeController implements Initializable {
         renderItems();
         renderOrderItems();
     }
-
-    // --- Rendering ---
-
+    // Render items on the GUI
     private void renderItems() {
         itemContainer.getChildren().clear();
 
         for (Item item : items) {
-            Button btn = new Button(item.getName() + "  $" + item.getItemPrice());
-            btn.setMaxWidth(Double.MAX_VALUE);
+            Button btn = new Button(item.getName() + "\n$" + item.getItemPrice());
+            btn.setPrefWidth(200);
+            btn.setPrefHeight(80);
+            btn.setStyle(
+                    "-fx-background-color: #2a2a2a;" +
+                            "-fx-text-fill: #ffffff;" +
+                            "-fx-font-size: 15;" +
+                            "-fx-background-radius: 8;" +
+                            "-fx-border-color: #333333;" +
+                            "-fx-border-radius: 8;" +
+                            "-fx-border-width: 1;" +
+                            "-fx-alignment: center;"
+            );
             btn.setOnAction(e -> handleItemClicked(item));
             itemContainer.getChildren().add(btn);
         }
