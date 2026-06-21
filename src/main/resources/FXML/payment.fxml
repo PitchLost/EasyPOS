@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text layoutX="232.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment">
+         <font>
+            <Font name="System Bold Italic" size="39.0" />
+         </font>
+      </Text>
+      <Text layoutX="282.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$0.00" />
+      <GridPane layoutX="-1.0" layoutY="119.0" prefHeight="30.0" prefWidth="600.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button mnemonicParsing="false" text="5" GridPane.halignment="CENTER" />
+            <Button mnemonicParsing="false" text="10" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+            <Button mnemonicParsing="false" text="20" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+            <Button mnemonicParsing="false" text="50" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+            <Button mnemonicParsing="false" text="100" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
+         </children>
+      </GridPane>
+      <GridPane layoutX="-1.0" layoutY="200.0" prefHeight="30.0" prefWidth="600.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Button mnemonicParsing="false" text="0.10" GridPane.halignment="CENTER" />
+            <Button mnemonicParsing="false" text="0.20" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+            <Button mnemonicParsing="false" text="0.50" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+            <Button mnemonicParsing="false" text="1" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+            <Button mnemonicParsing="false" text="2" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
+         </children>
+      </GridPane>
+      <Text layoutX="282.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$0.00" />
+      <Button layoutX="239.0" layoutY="307.0" mnemonicParsing="false" text="Complete Payment" />
+      <Button layoutX="101.0" layoutY="307.0" mnemonicParsing="false" text="Home" />
+      <Button layoutX="439.0" layoutY="307.0" mnemonicParsing="false" text="Select Order" />
+   </children>
+</AnchorPane>
