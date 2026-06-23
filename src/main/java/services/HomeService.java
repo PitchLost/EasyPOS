@@ -2,11 +2,13 @@ package services;
 import models.Item;
 import models.Order;
 import models.OrderItem;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class HomeService {
     Boolean debugMode = true;
-
+    BigDecimal total;
 
     public ArrayList<Order> orders = new ArrayList<>();
     ArrayList<Order> cachedOrders = new ArrayList<>();
@@ -21,6 +23,7 @@ public class HomeService {
         // If no orders exist already create an order and select it
         newOrder();
         selectOrder(orders.get(0));
+        total = new BigDecimal("0.00");
     }
 
     void debugPrint(String message) {
@@ -74,7 +77,7 @@ public class HomeService {
         debugPrint("Edit Name");
         Order selectedOrder = orders.get(orderIndex);
         selectedOrder.setOrderName(name);
-        // TODO: Send a UI update and update the name element
+        // TODO: Send a UI update and update a name element
     }
 
     // Edits the quantity by calling an order method to set qty through an items id
@@ -93,6 +96,12 @@ public class HomeService {
     }
 
 
+    public BigDecimal getTotal() {
+        return total;
+    }
 
+    public void incrementTotal(BigDecimal total) {
+        this.total = this.total.add(total);
+    }
 }
 

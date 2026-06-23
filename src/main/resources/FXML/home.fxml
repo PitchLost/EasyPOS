@@ -51,9 +51,7 @@
             <content>
                 <VBox fx:id="orderTabContainer" spacing="6.0" alignment="TOP_CENTER" style="-fx-padding: 8;">
                     <Label style="-fx-text-fill: #555555; -fx-font-size: 14; -fx-font-weight: bold; -fx-padding: 0 0 8 0;" text="Orders" />
-                    <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Order #1" />
-                    <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Order #2" />
-                    <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Order #3" />
+                    <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Orders will appear here" />
                 </VBox>
             </content>
         </ScrollPane>

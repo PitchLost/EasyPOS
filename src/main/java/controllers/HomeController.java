@@ -11,6 +11,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import services.PaymentService;
 
 import java.math.BigDecimal;
 import java.net.URL;
@@ -19,8 +20,12 @@ import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
 
+    BigDecimal total;
+
     HomeService homeService = new HomeService();
+    PaymentService paymentService;
     ArrayList<Item> items;
+    ArrayList<OrderItem> orderItems;
 
     @FXML private ScrollPane itemScrollPane;
     @FXML private FlowPane itemContainer;
@@ -31,7 +36,6 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         homeService.newOrder();
-        runTests();
         renderItems();
         renderOrderItems();
     }
@@ -69,22 +73,17 @@ public class HomeController implements Initializable {
         }
     }
 
-    // --- Handlers ---
+    // Handlers
 
     private void handleItemClicked(Item item) {
         homeService.addItem(item);
+        homeService.incrementTotal(item.getItemPrice());
         renderOrderItems();
     }
 
-    // FIXME: Delete this when caching implemented
-    void runTests() {
-        items = new ArrayList<>();
-        items.add(new Item(1, "Apple",        new BigDecimal("2.00"),      1, new ArrayList<>()));
-        items.add(new Item(2, "Banana",       new BigDecimal("1.50"),      1, new ArrayList<>()));
-        items.add(new Item(3, "Pear",         new BigDecimal("100000.00"), 1, new ArrayList<>()));
-        items.add(new Item(4, "Grapefruit",   new BigDecimal("0.00"),      1, new ArrayList<>()));
-        items.add(new Item(5, "Watermelon",   new BigDecimal("1.00"),      2, new ArrayList<>()));
-        items.add(new Item(6, "Passionfruit", new BigDecimal("0.00"),      2, new ArrayList<>()));
+    private void handleToPaymentClicked() {
+        paymentService = new PaymentService(homeService.getTotal(), homeService.getCurrentOrderItems());
+
     }
 }
 
