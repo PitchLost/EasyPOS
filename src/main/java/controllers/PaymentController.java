@@ -1,4 +1,5 @@
 package controllers;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import services.HomeService;
 import javafx.fxml.FXML;
@@ -24,15 +25,15 @@ public class PaymentController implements Initializable {
     @FXML
     private Text paymentPayed;
     @FXML
-    private Pane coinPane;
+    private HBox coinPane;
     @FXML
-    private Pane notePane;
+    private HBox notePane;
     BigDecimal totalDue = paymentService.getTotalDue();
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        coinButtons = new ArrayList<>(List.of("0.10", "0.20", "0.50", "1.00", "2.00"));
+        coinButtons = new ArrayList<>(List.of("0.10", "0.20", "0.50", "1.00", "2.00")); // Default values, may or may not be overridden by caching
         noteButtons = new ArrayList<>(List.of("5", "10", "20", "50", "100"));
 
         paymentPayed.setText("0.00");
@@ -47,8 +48,8 @@ public class PaymentController implements Initializable {
 
         for (String coin : coinButtons) {
             Button btn = new Button(coin);
-            btn.setPrefWidth(5);
-            btn.setPrefHeight(5);
+            btn.setPrefWidth(100);
+            btn.setPrefHeight(110);
             btn.setStyle(
                     "-fx-background-color: #2a2a2a;" +
                             "-fx-text-fill: #ffffff;" +
@@ -59,14 +60,15 @@ public class PaymentController implements Initializable {
                             "-fx-border-width: 1;" +
                             "-fx-alignment: center;"
             );
+
             btn.setOnAction(e -> handleButtonClicked(coin));
             coinPane.getChildren().add(btn);
         }
 
         for (String note : noteButtons) {
             Button btn = new Button(note);
-            btn.setPrefWidth(5);
-            btn.setPrefHeight(5);
+            btn.setPrefWidth(100);
+            btn.setPrefHeight(110);
             btn.setStyle(
                     "-fx-background-color: #2a2a2a;" +
                             "-fx-text-fill: #ffffff;" +
