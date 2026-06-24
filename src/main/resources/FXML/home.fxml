@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HomeController">
+<BorderPane prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HomeController">
     <!-- TOP: Header -->
     <top>
         <HBox alignment="CENTER_LEFT" style="-fx-background-color: #111111; -fx-padding: 12 24; -fx-spacing: 32;">
@@ -15,9 +21,9 @@
 
     <!-- LEFT: Order Items -->
     <left>
-        <VBox prefWidth="900.0" style="-fx-background-color: #000000; -fx-padding: 16; -fx-spacing: 8;">
+        <VBox prefHeight="746.0" prefWidth="1580.0" style="-fx-background-color: #0b111c; -fx-padding: 16; -fx-spacing: 8;">
             <Label style="-fx-text-fill: #ffffff; -fx-font-size: 18; -fx-font-weight: bold; -fx-padding: 0 0 8 0;" text="Current Order" />
-            <ScrollPane fx:id="orderScrollPane" fitToWidth="true" style="-fx-background: #000000; -fx-background-color: #000000; -fx-border-color: #333333; -fx-border-radius: 6;" VBox.vgrow="ALWAYS">
+            <ScrollPane fx:id="orderScrollPane" fitToWidth="true" prefHeight="671.0" prefWidth="953.0" style="-fx-background: #152645; -fx-background-color: #152645; -fx-border-color: #333333; -fx-border-radius: 6;" VBox.vgrow="ALWAYS">
                 <content>
                     <VBox fx:id="orderContainer" spacing="6.0" style="-fx-padding: 8;" />
                 </content>
@@ -27,36 +33,27 @@
 
     <!-- RIGHT: Action Buttons -->
     <right>
-        <VBox alignment="CENTER" prefHeight="800.0" prefWidth="342.0" style="-fx-background-color: #1a1a1a; -fx-padding: 24; -fx-spacing: 12;">
+        <VBox alignment="CENTER" prefHeight="785.0" prefWidth="342.0" style="-fx-background-color: #0b111c; -fx-padding: 24; -fx-spacing: 12;">
             <Label style="-fx-text-fill: #cccccc; -fx-font-size: 18; -fx-font-weight: bold; -fx-padding: 0 0 8 0;" text="Actions" />
-            <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="New Order" />
-            <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Select Order" />
-            <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleToPaymentClicked" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Payment Menu" />
-            <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Edit Name" />
-            <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Edit QTY" />
+            <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Create New Order">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Button>
+            <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Select Orders" />
+            <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleToPaymentClicked" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Checkout Order" />
+            <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Edit Order Name" />
+            <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Edit Item QTY" />
             <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #3a1a1a; -fx-text-fill: #ff6b6b; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Void Item" />
             <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #ff0000; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Void Order" />
             <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #111111; -fx-text-fill: #888888; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Settings" />
         </VBox>
     </right>
 
-    <!-- CENTER: Order Tabs -->
-    <center>
-        <ScrollPane style="-fx-background: #1a1a1a; -fx-background-color: #1a1a1a; -fx-border-color: #333333;">
-            <content>
-                <VBox fx:id="orderTabContainer" alignment="TOP_CENTER" spacing="6.0" style="-fx-padding: 8;">
-                    <Label style="-fx-text-fill: #555555; -fx-font-size: 14; -fx-font-weight: bold; -fx-padding: 0 0 8 0;" text="Orders" />
-                    <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Orders will appear here" />
-                </VBox>
-            </content>
-        </ScrollPane>
-    </center>
-
     <!-- BOTTOM: Add Items -->
     <bottom>
-        <VBox prefHeight="280.0" style="-fx-background-color: #1a1a1a; -fx-padding: 16; -fx-spacing: 8;">
+        <VBox prefHeight="280.0" style="-fx-background-color: #152645; -fx-padding: 16; -fx-spacing: 8;">
             <Label style="-fx-text-fill: #cccccc; -fx-font-size: 18; -fx-font-weight: bold; -fx-padding: 0 0 8 0;" text="Items" />
-            <ScrollPane fx:id="itemScrollPane" fitToWidth="true" style="-fx-background: #1a1a1a; -fx-background-color: #1a1a1a; -fx-border-color: #333333; -fx-border-radius: 6;" VBox.vgrow="ALWAYS">
+            <ScrollPane fx:id="itemScrollPane" fitToWidth="true" style="-fx-background: #0b111c; -fx-background-color: #0b111c; -fx-border-color: #333333; -fx-border-radius: 6;" VBox.vgrow="ALWAYS">
                 <content>
                     <FlowPane fx:id="itemContainer" hgap="8" style="-fx-padding: 8;" vgap="8" />
                 </content>
