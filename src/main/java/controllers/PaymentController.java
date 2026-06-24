@@ -17,15 +17,16 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class PaymentController implements Initializable {
-    HomeService homeService = new HomeService(); // Create a homeService object to use the HomeService methods
-    PaymentService paymentService = new PaymentService(new BigDecimal("350.00"), new ArrayList<>()); // Same as last
+    PaymentService paymentService;
     // An ArrayList for each of the coins and notes on the payment menu. Default values are added in init but also can be configed by user
     ArrayList<String> coinButtons;
     ArrayList<String> noteButtons;
 
-    BigDecimal totalDue = paymentService.getTotalDue();
+    BigDecimal totalDue;
 
     // FXML elements
+    @FXML
+    private Label totalDueLabel;
     @FXML
     private Label paymentRemaining;
     @FXML
@@ -41,9 +42,7 @@ public class PaymentController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         coinButtons = new ArrayList<>(List.of("0.10", "0.20", "0.50", "1.00", "2.00")); // Default values, may or may not be overridden by caching
         noteButtons = new ArrayList<>(List.of("5", "10", "20", "50", "100"));
-
-        paymentPayed.setText("0.00");
-        paymentRemaining.setText(totalDue.setScale(2, RoundingMode.HALF_UP).toString());
+        System.out.println("Init complete");
         renderItems();
     }
 
@@ -106,12 +105,25 @@ public class PaymentController implements Initializable {
         paymentRemaining.setText(remaining.setScale(2, RoundingMode.HALF_UP).toString()); // Will this go negative?
     }
 
+    // Helpers:
+    private String convertToMoney(BigDecimal amount) {
+        return "$"+amount.toPlainString();
+    }
+
+    // Setters:
+
+
     // Setter for the payment service, this way we dont really have to pass paymentServices around different stages
     public void setPaymentService(PaymentService paymentService) {
         this.paymentService = paymentService;
+        this.totalDue = paymentService.getTotalDue(); // actually grab it
+        totalDueLabel.setText(convertToMoney(totalDue));
+        paymentPayed.setText("0.00");
+        paymentRemaining.setText(totalDue.setScale(2, RoundingMode.HALF_UP).toString());
     }
 
 
+    // Action functions
     public void markOrderComplete() {
         System.out.println("Marking order complete");
     }

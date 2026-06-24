@@ -8,10 +8,12 @@ public class PaymentService {
     BigDecimal totalDue;
     ArrayList<OrderItem> orderItems;
     public PaymentService(BigDecimal due, ArrayList<OrderItem> items) {
+        System.out.println("Total has been set: " + due);
         totalDue = due;
         orderItems = items;
     }
     public BigDecimal getTotalDue() {
+        System.out.println("Total has been requested from payment service: " + this.totalDue);
         return totalDue;
     }
 

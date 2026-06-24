@@ -8,11 +8,22 @@ import java.util.ArrayList;
 
 public class HomeService {
     Boolean debugMode = true;
-    BigDecimal total;
+    BigDecimal total = new BigDecimal("0.00");
 
     public ArrayList<Order> orders = new ArrayList<>();
     ArrayList<Order> cachedOrders = new ArrayList<>();
     int orderIndex;
+
+    // Singleton logic. We need this since HomeService also stores the memory version of orders. (It's still cached but that shouldnt be
+    // constantly grabbed) Another approach is to create an OrderService but I think that would also be just as complicated as this.
+    private static HomeService instance;
+
+    public static HomeService getInstance() {
+        if (instance == null) {
+            instance = new HomeService();
+        }
+        return instance;
+    }
 
 
 
@@ -97,11 +108,13 @@ public class HomeService {
 
 
     public BigDecimal getTotal() {
-        return total;
+        System.out.println("Total has been requested: " + this.total);
+        return this.total;
     }
 
     public void incrementTotal(BigDecimal total) {
         this.total = this.total.add(total);
+        System.out.println("New total is: " + this.total);
     }
 }
 

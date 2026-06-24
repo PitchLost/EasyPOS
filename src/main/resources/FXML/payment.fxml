@@ -14,7 +14,7 @@
          <Label style="-fx-text-fill: white; -fx-font-size: 66; -fx-font-weight: bold; -fx-font-style: italic;" text="Payment" />
          <HBox alignment="CENTER" spacing="12">
             <Label style="-fx-text-fill: white; -fx-font-size: 27; -fx-font-weight: bold;" text="Total Due:" />
-            <Label style="-fx-text-fill: white; -fx-font-size: 27;" text="\$0.00" />
+            <Label fx:id="totalDueLabel" style="-fx-text-fill: white; -fx-font-size: 27;" text="\$0.00" />
          </HBox>
       </VBox>
    </top>
@@ -24,12 +24,10 @@
       <VBox alignment="CENTER" spacing="16" style="-fx-padding: 24;">
 
          <Label style="-fx-text-fill: white; -fx-font-size: 35; -fx-font-weight: bold;" text="Notes" />
-         <HBox fx:id="notePane" alignment="CENTER" maxWidth="Infinity" spacing="10"
-               style="-fx-background-color: #0b111c; -fx-padding: 12; -fx-min-height: 80;" />
+         <HBox fx:id="notePane" alignment="CENTER" maxWidth="Infinity" spacing="10" style="-fx-background-color: #0b111c; -fx-padding: 12; -fx-min-height: 80;" />
 
          <Label style="-fx-text-fill: white; -fx-font-size: 39; -fx-font-weight: bold;" text="Coins" />
-         <HBox fx:id="coinPane" alignment="CENTER" maxWidth="Infinity" spacing="10"
-               style="-fx-background-color: #0b111c; -fx-padding: 12; -fx-min-height: 80;" />
+         <HBox fx:id="coinPane" alignment="CENTER" maxWidth="Infinity" spacing="10" style="-fx-background-color: #0b111c; -fx-padding: 12; -fx-min-height: 80;" />
 
          <HBox alignment="CENTER" spacing="12">
             <Label style="-fx-text-fill: white; -fx-font-size: 27; -fx-font-weight: bold;" text="Paid:" />
@@ -46,16 +44,13 @@
 
    <bottom>
       <HBox alignment="CENTER" spacing="24" style="-fx-padding: 24; -fx-background-color: #0b111c;">
-         <Button fx:id="paymentToHome" mnemonicParsing="false" onAction="#toHome"
-                 prefHeight="75" prefWidth="278" text="Home">
+         <Button fx:id="paymentToHome" mnemonicParsing="false" onAction="#toHome" prefHeight="75" prefWidth="278" text="Home">
             <font><Font size="36.0" /></font>
          </Button>
-         <Button fx:id="paymentSelectOrder" mnemonicParsing="false" onAction="#toSelectOrder"
-                 prefHeight="87" prefWidth="273" text="Select Order">
+         <Button fx:id="paymentSelectOrder" mnemonicParsing="false" onAction="#toSelectOrder" prefHeight="87" prefWidth="273" text="Select Order">
             <font><Font size="36.0" /></font>
          </Button>
-         <Button fx:id="paymentMarkComplete" mnemonicParsing="false" onAction="#markOrderComplete"
-                 prefHeight="86" prefWidth="342" text="Mark Complete">
+         <Button fx:id="paymentMarkComplete" mnemonicParsing="false" onAction="#markOrderComplete" prefHeight="86" prefWidth="342" text="Mark Complete">
             <font><Font size="36.0" /></font>
          </Button>
       </HBox>

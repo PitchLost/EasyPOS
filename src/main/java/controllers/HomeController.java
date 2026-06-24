@@ -23,7 +23,7 @@ public class HomeController implements Initializable {
 
     BigDecimal total;
 
-    HomeService homeService = new HomeService();
+    HomeService homeService = HomeService.getInstance();
     PaymentService paymentService;
     ArrayList<Item> items = new ArrayList<>();
     ArrayList<OrderItem> orderItems;
@@ -101,7 +101,7 @@ public class HomeController implements Initializable {
         Stage stage = (Stage) itemScrollPane.getScene().getWindow(); // Get the active stage object from a loaded FXML element
 
         NavigationController.navigateTo(stage, "/FXML/payment.fxml", controller -> {
-            PaymentController c = (PaymentController) controller; // Marks controller as a PaymentController type
+            PaymentController c = (PaymentController) controller;
             c.setPaymentService(paymentService);
         });
     }
