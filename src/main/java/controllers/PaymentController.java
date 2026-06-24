@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 
 public class PaymentController implements Initializable {
     HomeService homeService = new HomeService();
-    PaymentService paymentService = new PaymentService(homeService.getTotal(), homeService.getCurrentOrderItems());
+    PaymentService paymentService = new PaymentService(new BigDecimal("350.00"), new ArrayList<>()); // TODO: Not init this here??
     ArrayList<String> coinButtons;
     ArrayList<String> noteButtons;
     @FXML
@@ -37,7 +37,6 @@ public class PaymentController implements Initializable {
 
         paymentPayed.setText("0.00");
         paymentRemaining.setText(totalDue.setScale(2, RoundingMode.HALF_UP).toString());
-
         renderItems();
     }
     // Render items on the GUI
@@ -83,7 +82,7 @@ public class PaymentController implements Initializable {
         }
     }
 
-    // --- Handlers ---
+    // Handlers
 
     private void handleButtonClicked(String incrementValue) {
         BigDecimal currentPayed = new BigDecimal(paymentPayed.getText());
@@ -94,6 +93,23 @@ public class PaymentController implements Initializable {
 
         BigDecimal remaining = totalDue.subtract(newPayed);
         paymentRemaining.setText(remaining.max(BigDecimal.ZERO).setScale(2, RoundingMode.HALF_UP).toString());
+    }
+
+    // Setter for the payment service, this way we dont really have to pass paymentServices around different stages
+    public void setPaymentService(PaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
+
+    public void markOrderComplete() {
+        System.out.println("Marking order complete");
+    }
+
+    public void toHome() {
+        System.out.println("To home");
+    }
+
+    public void toSelectOrder() {
+        System.out.println("To select order");
     }
 
 }

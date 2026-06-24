@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.FlowPane?>
-<BorderPane prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HomeController">
+<BorderPane prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HomeController">
     <!-- TOP: Header -->
     <top>
         <HBox alignment="CENTER_LEFT" style="-fx-background-color: #111111; -fx-padding: 12 24; -fx-spacing: 32;">
@@ -36,7 +31,7 @@
             <Label style="-fx-text-fill: #cccccc; -fx-font-size: 18; -fx-font-weight: bold; -fx-padding: 0 0 8 0;" text="Actions" />
             <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="New Order" />
             <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Select Order" />
-            <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Payment Menu" />
+            <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleToPaymentClicked" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Payment Menu" />
             <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Edit Name" />
             <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Edit QTY" />
             <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #3a1a1a; -fx-text-fill: #ff6b6b; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Void Item" />
@@ -49,7 +44,7 @@
     <center>
         <ScrollPane style="-fx-background: #1a1a1a; -fx-background-color: #1a1a1a; -fx-border-color: #333333;">
             <content>
-                <VBox fx:id="orderTabContainer" spacing="6.0" alignment="TOP_CENTER" style="-fx-padding: 8;">
+                <VBox fx:id="orderTabContainer" alignment="TOP_CENTER" spacing="6.0" style="-fx-padding: 8;">
                     <Label style="-fx-text-fill: #555555; -fx-font-size: 14; -fx-font-weight: bold; -fx-padding: 0 0 8 0;" text="Orders" />
                     <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Orders will appear here" />
                 </VBox>
@@ -63,7 +58,7 @@
             <Label style="-fx-text-fill: #cccccc; -fx-font-size: 18; -fx-font-weight: bold; -fx-padding: 0 0 8 0;" text="Items" />
             <ScrollPane fx:id="itemScrollPane" fitToWidth="true" style="-fx-background: #1a1a1a; -fx-background-color: #1a1a1a; -fx-border-color: #333333; -fx-border-radius: 6;" VBox.vgrow="ALWAYS">
                 <content>
-                    <FlowPane fx:id="itemContainer" hgap="8" vgap="8" style="-fx-padding: 8;" />
+                    <FlowPane fx:id="itemContainer" hgap="8" style="-fx-padding: 8;" vgap="8" />
                 </content>
             </ScrollPane>
         </VBox>

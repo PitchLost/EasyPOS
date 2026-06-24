@@ -1,6 +1,7 @@
 package controllers;
 
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Stage;
 import models.Item;
 import models.OrderItem;
 import services.HomeService;
@@ -24,7 +25,7 @@ public class HomeController implements Initializable {
 
     HomeService homeService = new HomeService();
     PaymentService paymentService;
-    ArrayList<Item> items;
+    ArrayList<Item> items = new ArrayList<>();
     ArrayList<OrderItem> orderItems;
 
     @FXML private ScrollPane itemScrollPane;
@@ -36,12 +37,21 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         homeService.newOrder();
+        items.add(new Item(1, "Apple", new BigDecimal("1.00"), 1, new ArrayList<>()));
+        items.add(new Item(2, "Pear", new BigDecimal("1.50"), 1, new ArrayList<>()));
+        items.add(new Item(3, "Banna", new BigDecimal("2.00"), 1, new ArrayList<>()));
+        items.add(new Item(4, "Kiwifruit", new BigDecimal("0.00"), 2, new ArrayList<>()));
+        items.add(new Item(5, "Melon", new BigDecimal("100.00"), 2, new ArrayList<>()));
+
+
         renderItems();
         renderOrderItems();
     }
     // Render items on the GUI
     private void renderItems() {
+        // FIXME: Breaks if items is null
         itemContainer.getChildren().clear();
+
 
         for (Item item : items) {
             Button btn = new Button(item.getName() + "\n$" + item.getItemPrice());
@@ -62,6 +72,7 @@ public class HomeController implements Initializable {
         }
     }
 
+    // Renders the items in the order
     private void renderOrderItems() {
         orderContainer.getChildren().clear();
 
@@ -81,14 +92,17 @@ public class HomeController implements Initializable {
         renderOrderItems();
     }
 
-    private void handleToPaymentClicked() {
+    public void handleToPaymentClicked() {
         paymentService = new PaymentService(homeService.getTotal(), homeService.getCurrentOrderItems());
+        Stage stage = (Stage) itemScrollPane.getScene().getWindow(); // Get the active stage object from a loaded FXML element
 
+        NavigationController.navigateTo(stage, "/FXML/payment.fxml", controller -> {
+            PaymentController c = (PaymentController) controller; // Marks controller as a PaymentController type
+            c.setPaymentService(paymentService);
+        });
     }
 }
 
     // TODO:
-    // Render a button for each available item from the cache
-    // Create a pane for each item in the currently selected order
     // Listen and handle calls from the actions buttons
 
