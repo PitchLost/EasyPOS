@@ -1,4 +1,5 @@
 package controllers;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import services.HomeService;
@@ -16,21 +17,26 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class PaymentController implements Initializable {
-    HomeService homeService = new HomeService();
-    PaymentService paymentService = new PaymentService(new BigDecimal("350.00"), new ArrayList<>()); // TODO: Not init this here??
+    HomeService homeService = new HomeService(); // Create a homeService object to use the HomeService methods
+    PaymentService paymentService = new PaymentService(new BigDecimal("350.00"), new ArrayList<>()); // Same as last
+    // An ArrayList for each of the coins and notes on the payment menu. Default values are added in init but also can be configed by user
     ArrayList<String> coinButtons;
     ArrayList<String> noteButtons;
+
+    BigDecimal totalDue = paymentService.getTotalDue();
+
+    // FXML elements
     @FXML
-    private Text paymentRemaining;
+    private Label paymentRemaining;
     @FXML
-    private Text paymentPayed;
+    private Label paymentPayed;
     @FXML
     private HBox coinPane;
     @FXML
     private HBox notePane;
-    BigDecimal totalDue = paymentService.getTotalDue();
 
 
+    // Init, Sets some default values and placeholder values for FXML elements
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         coinButtons = new ArrayList<>(List.of("0.10", "0.20", "0.50", "1.00", "2.00")); // Default values, may or may not be overridden by caching
@@ -40,12 +46,13 @@ public class PaymentController implements Initializable {
         paymentRemaining.setText(totalDue.setScale(2, RoundingMode.HALF_UP).toString());
         renderItems();
     }
+
+
     // Render items on the GUI
-
-
     private void renderItems() {
         coinPane.getChildren().clear();
 
+        // TODO: Merge these into 1 loop?
         for (String coin : coinButtons) {
             Button btn = new Button(coin);
             btn.setPrefWidth(100);
@@ -86,6 +93,8 @@ public class PaymentController implements Initializable {
 
     // Handlers
 
+    // Handle when a coin or note button gets clicked.
+    // It adds the value of the button to the amount payed and removes it from the amount remaining
     private void handleButtonClicked(String incrementValue) {
         BigDecimal currentPayed = new BigDecimal(paymentPayed.getText());
         BigDecimal increment = new BigDecimal(incrementValue);
@@ -94,13 +103,14 @@ public class PaymentController implements Initializable {
         paymentPayed.setText(newPayed.setScale(2, RoundingMode.HALF_UP).toString());
 
         BigDecimal remaining = totalDue.subtract(newPayed);
-        paymentRemaining.setText(remaining.max(BigDecimal.ZERO).setScale(2, RoundingMode.HALF_UP).toString());
+        paymentRemaining.setText(remaining.setScale(2, RoundingMode.HALF_UP).toString()); // Will this go negative?
     }
 
     // Setter for the payment service, this way we dont really have to pass paymentServices around different stages
     public void setPaymentService(PaymentService paymentService) {
         this.paymentService = paymentService;
     }
+
 
     public void markOrderComplete() {
         System.out.println("Marking order complete");
@@ -114,4 +124,6 @@ public class PaymentController implements Initializable {
         System.out.println("To select order");
     }
 
+    //TODO:
+    // Make amount remaining not bottom out at 0
 }

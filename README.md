@@ -1,6 +1,8 @@
 # Easy POS
 
+## Installation
+
+## Guide
+
 ## Documentation
 
-
-## Issue Log

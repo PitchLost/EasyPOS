@@ -11,6 +11,9 @@ public class Order {
 
     // Constructor
     public Order(int idx, String name) {
+        if (name == "") {
+            name = "No Name Provided";
+        }
         orderName = name;
         orderIndex = idx;
     }
@@ -32,25 +35,32 @@ public class Order {
         return 0;
     }
 
-    // Getter for the items ArrayList of the order
+    // Getters:
+
+
+    // Get the items ArrayList of the order
     public ArrayList<OrderItem> getOrderItems() {
         return orderItems;
     }
+
 
     public int getOrderIndex() {
         return orderIndex;
     }
 
-//    public OrderItem getItemFromId(int id) {
-//        for (int i = 0; i < orderItems.size(); i++) {
-//            if (orderItems.get(i).getItemId() == id) {
-//            return orderItems.get(i);
-//            }
-//        }
-//        return 0;
-//        }
+    // Return a string representation of the order
+    public String getOrderRepr() {
+        String returnString = orderName + "\n";
+        for (int i = 0; i < orderItems.size(); i++) {
+            returnString = returnString + orderItems.get(i).getItemId() + "\n";
+        }
+        return returnString;
+    }
 
-     // TODO: Can this be a bit shorter and cleaner?
+    // Setters:
+
+    // Set the items qty by the ID of the item.
+    // TODO: Can this be faster than O(n)??
     public void setItemQuantityById(int id, int quantity) {
         for (int i = 0; i < orderItems.size(); i++) {
             if (orderItems.get(i).getItemId() == id) {
@@ -58,7 +68,6 @@ public class Order {
             }
         }
     }
-
     public void setOrderName(String orderName) {
         this.orderName = orderName;
     }

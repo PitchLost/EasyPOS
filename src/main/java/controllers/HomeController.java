@@ -34,6 +34,7 @@ public class HomeController implements Initializable {
     @FXML private ScrollPane orderScrollPane;
     @FXML private VBox orderContainer;
 
+    // init. This is in charge of calling the required functions to ensure the GUI is loaded correctly
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         homeService.newOrder();
@@ -47,12 +48,13 @@ public class HomeController implements Initializable {
         renderItems();
         renderOrderItems();
     }
+
     // Render items on the GUI
     private void renderItems() {
         // FIXME: Breaks if items is null
         itemContainer.getChildren().clear();
 
-
+        // Use a for loop to create a button for each item in the items ArrayList.
         for (Item item : items) {
             Button btn = new Button(item.getName() + "\n$" + item.getItemPrice());
             btn.setPrefWidth(200);
@@ -72,7 +74,7 @@ public class HomeController implements Initializable {
         }
     }
 
-    // Renders the items in the order
+    // Renders the items in the order onto the GUI
     private void renderOrderItems() {
         orderContainer.getChildren().clear();
 
@@ -86,12 +88,14 @@ public class HomeController implements Initializable {
 
     // Handlers
 
+    // Handle when an item is clicked (Added to the order from the bottom part of the GUI)
     private void handleItemClicked(Item item) {
         homeService.addItem(item);
         homeService.incrementTotal(item.getItemPrice());
         renderOrderItems();
     }
 
+    // Handle the action button "Checkout Order"
     public void handleToPaymentClicked() {
         paymentService = new PaymentService(homeService.getTotal(), homeService.getCurrentOrderItems());
         Stage stage = (Stage) itemScrollPane.getScene().getWindow(); // Get the active stage object from a loaded FXML element
@@ -105,4 +109,5 @@ public class HomeController implements Initializable {
 
     // TODO:
     // Listen and handle calls from the actions buttons
+    // The buttons look a little funky, they need a little work
 

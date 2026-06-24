@@ -1,5 +1,3 @@
-// Yo this is lowkey 100% claude lets pray it works
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,6 +11,8 @@ public class App extends Application {
         Scene scene = new Scene(loader.load());
         stage.setTitle("EasyPOS");
         stage.setScene(scene);
+        stage.setMaximized(true);
+        stage.setFullScreen(true);
         stage.show();
     }
 

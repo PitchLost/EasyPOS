@@ -1,69 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #152645;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PaymentController">
-   <children>
-      <Text fill="WHITE" layoutX="841.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment">
-         <font>
-            <Font name="System Bold Italic" size="66.0" />
-         </font>
-      </Text>
-      <Text fill="WHITE" layoutX="1037.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$0.00">
-         <font>
-            <Font size="27.0" />
-         </font></Text>
-      <Text fx:id="paymentRemaining" fill="WHITE" layoutX="943.0" layoutY="878.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$0.00">
-         <font>
-            <Font size="27.0" />
-         </font></Text>
-      <Button fx:id="paymentMarkComplete" layoutX="1578.0" layoutY="994.0" mnemonicParsing="false" onAction="#markOrderComplete" prefHeight="86.0" prefWidth="342.0" text="Mark Complete">
-         <font>
-            <Font size="36.0" />
-         </font></Button>
-      <Button fx:id="paymentToHome" layoutY="1003.0" mnemonicParsing="false" onAction="#toHome" prefHeight="75.0" prefWidth="278.0" text="Home">
-         <font>
-            <Font size="36.0" />
-         </font></Button>
-      <Button fx:id="paymentSelectOrder" layoutX="824.0" layoutY="994.0" mnemonicParsing="false" onAction="#toSelectOrder" prefHeight="87.0" prefWidth="273.0" text="Select Order">
-         <font>
-            <Font size="36.0" />
-         </font></Button>
-      <Text fill="WHITE" layoutX="921.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Notes">
-         <font>
-            <Font name="System Bold" size="35.0" />
-         </font>
-      </Text>
-      <Text fill="WHITE" layoutX="916.0" layoutY="514.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Coins">
-         <font>
-            <Font name="System Bold" size="39.0" />
-         </font>
-      </Text>
-      <Text fill="WHITE" layoutX="934.0" layoutY="745.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payed:">
-         <font>
-            <Font name="System Bold" size="27.0" />
-         </font>
-      </Text>
-      <Text fill="WHITE" layoutX="904.0" layoutY="841.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remaining:" wrappingWidth="150.4635009765625">
-         <font>
-            <Font name="System Bold" size="28.0" />
-         </font>
-      </Text>
-      <Text fill="WHITE" layoutX="864.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Due:">
-         <font>
-            <Font name="System Bold" size="27.0" />
-         </font>
-      </Text>
-      <Text fx:id="paymentPayed" fill="WHITE" layoutX="936.0" layoutY="782.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$0.00" wrappingWidth="93.8984375">
-         <font>
-            <Font size="27.0" />
-         </font></Text>
-      <HBox fx:id="coinPane" spacing="10" alignment="CENTER" layoutX="1.0" layoutY="559.0" prefHeight="137.0" prefWidth="1925.0" style="-fx-background-color: #0b111c;" />
-      <HBox fx:id="notePane" spacing="10" alignment="CENTER" layoutX="-3.0" layoutY="312.0" prefHeight="137.0" prefWidth="1923.0" style="-fx-background-color: #0b111c;" />
-   </children>
-</AnchorPane>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane style="-fx-background-color: #152645;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PaymentController">
+
+   <top>
+      <VBox alignment="CENTER" style="-fx-padding: 24; -fx-spacing: 8;">
+         <Label style="-fx-text-fill: white; -fx-font-size: 66; -fx-font-weight: bold; -fx-font-style: italic;" text="Payment" />
+         <HBox alignment="CENTER" spacing="12">
+            <Label style="-fx-text-fill: white; -fx-font-size: 27; -fx-font-weight: bold;" text="Total Due:" />
+            <Label style="-fx-text-fill: white; -fx-font-size: 27;" text="\$0.00" />
+         </HBox>
+      </VBox>
+   </top>
+
+
+   <center>
+      <VBox alignment="CENTER" spacing="16" style="-fx-padding: 24;">
+
+         <Label style="-fx-text-fill: white; -fx-font-size: 35; -fx-font-weight: bold;" text="Notes" />
+         <HBox fx:id="notePane" alignment="CENTER" maxWidth="Infinity" spacing="10"
+               style="-fx-background-color: #0b111c; -fx-padding: 12; -fx-min-height: 80;" />
+
+         <Label style="-fx-text-fill: white; -fx-font-size: 39; -fx-font-weight: bold;" text="Coins" />
+         <HBox fx:id="coinPane" alignment="CENTER" maxWidth="Infinity" spacing="10"
+               style="-fx-background-color: #0b111c; -fx-padding: 12; -fx-min-height: 80;" />
+
+         <HBox alignment="CENTER" spacing="12">
+            <Label style="-fx-text-fill: white; -fx-font-size: 27; -fx-font-weight: bold;" text="Paid:" />
+            <Label fx:id="paymentPayed" style="-fx-text-fill: white; -fx-font-size: 27;" text="\$0.00" />
+         </HBox>
+
+         <HBox alignment="CENTER" spacing="12">
+            <Label style="-fx-text-fill: white; -fx-font-size: 28; -fx-font-weight: bold;" text="Remaining:" />
+            <Label fx:id="paymentRemaining" style="-fx-text-fill: white; -fx-font-size: 27;" text="\$0.00" />
+         </HBox>
+
+      </VBox>
+   </center>
+
+   <bottom>
+      <HBox alignment="CENTER" spacing="24" style="-fx-padding: 24; -fx-background-color: #0b111c;">
+         <Button fx:id="paymentToHome" mnemonicParsing="false" onAction="#toHome"
+                 prefHeight="75" prefWidth="278" text="Home">
+            <font><Font size="36.0" /></font>
+         </Button>
+         <Button fx:id="paymentSelectOrder" mnemonicParsing="false" onAction="#toSelectOrder"
+                 prefHeight="87" prefWidth="273" text="Select Order">
+            <font><Font size="36.0" /></font>
+         </Button>
+         <Button fx:id="paymentMarkComplete" mnemonicParsing="false" onAction="#markOrderComplete"
+                 prefHeight="86" prefWidth="342" text="Mark Complete">
+            <font><Font size="36.0" /></font>
+         </Button>
+      </HBox>
+   </bottom>
+
+</BorderPane>

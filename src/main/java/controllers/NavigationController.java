@@ -63,8 +63,14 @@ public class NavigationController {
                 initialiser.initialise(loader.getController());
             }
 
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+            // If a scene already exists, just swap the root
+            if (stage.getScene() != null) {
+                stage.getScene().setRoot(root);
+            } else {
+                stage.setScene(new Scene(root));
+                stage.setMaximized(true);
+            }
+
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException("Failed to load FXML: " + fxmlPath, e);
