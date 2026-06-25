@@ -135,13 +135,12 @@ public class PaymentController implements Initializable {
     }
 
     public void toHome() {
-        System.out.println("To home");
+
         Stage stage = (Stage) coinPane.getScene().getWindow();
         NavigationController.navigateTo(stage, "/FXML/home.fxml");
     }
 
     public void toSelectOrder() {
-        System.out.println("To select order");
     }
 
     //TODO:

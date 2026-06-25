@@ -26,14 +26,15 @@ public class Order {
     }
 
     // Void/Remove item from the order
-    public int voidItem(Item item) {
+    public void voidItem(OrderItem item) {
+        System.out.println("Order.voidItem(), Item details: "+item.getItemName());
         for (int i = 0; i < orderItems.size(); i++) {
-            if (orderItems.get(i).getItemId() == item.getId()) {
+            System.out.println("Checking item at index: " + i);
+            if (orderItems.get(i).getItemId() == item.getItemId()) {
+                System.out.println("Item found, removing!");
                 orderItems.remove(i);
-                return 1;
             }
         }
-        return 0;
     }
 
     // Getters:
