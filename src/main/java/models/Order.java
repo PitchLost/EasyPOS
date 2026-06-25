@@ -7,6 +7,7 @@ public class Order {
     String orderName;
     int orderIndex;
     ArrayList<OrderItem> orderItems = new ArrayList<>();
+    Boolean orderCompleted = false;
 
 
     // Constructor
@@ -43,6 +44,10 @@ public class Order {
         return orderItems;
     }
 
+    public Boolean getOrderCompleted() {
+        return orderCompleted;
+    }
+
 
     public int getOrderIndex() {
         return orderIndex;
@@ -70,5 +75,9 @@ public class Order {
     }
     public void setOrderName(String orderName) {
         this.orderName = orderName;
+    }
+
+    public void setOrderComplete(Boolean to) {
+        orderCompleted = to;
     }
     }
