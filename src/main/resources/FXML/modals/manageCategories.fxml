@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="16" style="-fx-background-color: #152645; -fx-padding: 24;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ManageCategoriesController">
+
+    <Label style="-fx-text-fill: white; -fx-font-size: 22; -fx-font-weight: bold;" text="Manage Categories" />
+
+    <ListView fx:id="categoryList" prefHeight="250" style="-fx-background-color: #0b111c; -fx-text-fill: white;" />
+
+    <HBox spacing="12">
+        <Button onAction="#handleRename" style="-fx-background-color: #2a2a2a; -fx-text-fill: white; -fx-padding: 10 20;" text="Rename" />
+      <Button layoutX="10.0" layoutY="10.0" onAction="#handleDelete" style="-fx-background-color: #eb0918; -fx-text-fill: white; -fx-padding: 10 20;" text="Delete" />
+        <Button onAction="#handleDone" style="-fx-background-color: #e8a020; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20;" text="Done" />
+    </HBox>
+
+</VBox>
