@@ -13,6 +13,7 @@
     <ListView fx:id="categoryList" prefHeight="250" style="-fx-background-color: #0b111c; -fx-text-fill: white;" />
 
     <HBox spacing="12">
+      <Button layoutX="10.0" layoutY="10.0" onAction="#handleCreate" style="-fx-background-color: #2a2a2a; -fx-text-fill: white; -fx-padding: 10 20;" text="Create New" />
         <Button onAction="#handleRename" style="-fx-background-color: #2a2a2a; -fx-text-fill: white; -fx-padding: 10 20;" text="Rename" />
       <Button layoutX="10.0" layoutY="10.0" onAction="#handleDelete" style="-fx-background-color: #eb0918; -fx-text-fill: white; -fx-padding: 10 20;" text="Delete" />
         <Button onAction="#handleDone" style="-fx-background-color: #e8a020; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20;" text="Done" />

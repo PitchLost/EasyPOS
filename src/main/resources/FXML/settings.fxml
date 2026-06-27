@@ -23,16 +23,6 @@
             <Label style="-fx-text-fill: white; -fx-font-size: 35; -fx-font-weight: bold;" text="POS Items" />
             <HBox fx:id="notePane" alignment="CENTER" maxWidth="Infinity" spacing="10" style="-fx-background-color: #0b111c; -fx-padding: 12; -fx-min-height: 80;">
             <children>
-               <Button mnemonicParsing="false" onAction="#toHome" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="New Category">
-                  <font>
-                     <Font size="36.0" />
-                  </font>
-               </Button>
-               <Button layoutX="316.0" layoutY="29.0" mnemonicParsing="false" onAction="#toHome" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="New Item">
-                  <font>
-                     <Font size="36.0" />
-                  </font>
-               </Button>
                <Button layoutX="418.0" layoutY="29.0" mnemonicParsing="false" onAction="#openManageCategories" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Manage Categories">
                   <font>
                      <Font size="36.0" />

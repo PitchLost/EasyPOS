@@ -47,6 +47,18 @@ public class SettingsController implements Initializable {
 
     @FXML
     private void openManageItems() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/modals/manageItems.fxml"));
+            Parent root = loader.load();
 
+            Stage modal = new Stage();
+            modal.initModality(Modality.APPLICATION_MODAL);
+            modal.initOwner(settingsToHome.getScene().getWindow());
+            modal.setTitle("Manage Items");
+            modal.setScene(new Scene(root, 600, 400));
+            modal.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

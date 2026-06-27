@@ -4,6 +4,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import models.Item;
 import models.OrderItem;
+import services.CacheService;
 import services.HomeService;
 
 import javafx.fxml.FXML;
@@ -24,7 +25,9 @@ import java.util.ResourceBundle;
 public class HomeController implements Initializable {
     HomeService homeService = HomeService.getInstance();
     PaymentService paymentService;
+    CacheService caching = new CacheService();
     LinkedHashMap<String, ArrayList<Item>> menu = new LinkedHashMap<>();
+    ArrayList<String> categories = new ArrayList<>();
     String selectedCategory;
     OrderItem selectedItem;
 
@@ -36,11 +39,13 @@ public class HomeController implements Initializable {
     @FXML private Label orderPaidLabel;
     @FXML private FlowPane categoryContainer;
 
-    // init. This is in charge of calling the required functions to ensure the GUI is loaded correctly
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         homeService.init();
         loadMenu();
+        loadCategories();
+        // Exit if menu is empty.. ie no items have been created yet so there's nothing to render
         if (menu.isEmpty()) {
             return;
         }
@@ -50,14 +55,24 @@ public class HomeController implements Initializable {
     }
 
 
+    // Load menu from caching
     private void loadMenu() {
-        // TODO: Get the hashmap from the cache
+        menu = caching.loadMenu();
+    }
+
+    //FIXME: Merge this and the menu
+    private void loadCategories() {
+        categories = caching.loadCategories();
     }
 
 
     private void renderCategories() {
-        selectedCategory = menu.keySet().iterator().next();
-        for (String category : menu.keySet()) {
+        categoryContainer.getChildren().clear();
+        if (categories.isEmpty()) return;
+
+        selectedCategory = categories.get(0);
+
+        for (String category : categories) {
             Button btn = new Button(category);
             btn.setPrefWidth(120);
             btn.setPrefHeight(40);
@@ -106,11 +121,11 @@ public class HomeController implements Initializable {
     }
     // Render items on the GUI
     private void renderItems() {
-        // FIXME: Breaks if items is null
         itemContainer.getChildren().clear();
+        ArrayList<Item> items = menu.get(selectedCategory);
+        if (items == null) return;
 
-        // Use a for loop to create a button for each item in the items ArrayList.
-        for (Item item : menu.get(selectedCategory)) {
+        for (Item item : items) {
             Button btn = new Button(item.getName() + "\n$" + item.getItemPrice());
             btn.setPrefWidth(200);
             btn.setPrefHeight(80);
@@ -180,8 +195,4 @@ public class HomeController implements Initializable {
     }
 
 }
-
-    // TODO:
-    // Listen and handle calls from the actions buttons
-    // The buttons look a little funky, they need a little work
 

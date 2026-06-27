@@ -7,19 +7,23 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
+import models.Item;
+import services.CacheService;
 
+import java.math.BigDecimal;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class ManageCategoriesController implements Initializable {
-
+    CacheService caching = new CacheService();
     @FXML private ListView<String> categoryList;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // TODO: Replace with cached menu keys when storage is set up
-        List<String> categories = List.of("Burgers", "Drinks", "Sides");
+        ArrayList<String> categories = caching.loadCategories();
         categoryList.getItems().addAll(categories);
     }
     @FXML
@@ -29,10 +33,25 @@ public class ManageCategoriesController implements Initializable {
     }
 
     @FXML
+    public void handleCreate() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("New Category");
+        dialog.setHeaderText("New Category");
+        dialog.setContentText("Category name:");
+        dialog.initOwner(categoryList.getScene().getWindow());
+
+        dialog.showAndWait().ifPresent(name -> {
+            if (name.isBlank()) return;
+            categoryList.getItems().add(name);
+            caching.addCategory(name);
+        });
+    }
+
+    @FXML
     public void handleRename() {
         String selected = categoryList.getSelectionModel().getSelectedItem();
         if (selected == null) return;
-
+        String originalName = categoryList.getSelectionModel().getSelectedItem();
         TextInputDialog dialog = new TextInputDialog(selected);
         dialog.setTitle("Rename Category");
         dialog.setHeaderText("Rename \"" + selected + "\"");
@@ -43,7 +62,7 @@ public class ManageCategoriesController implements Initializable {
             if (!newName.isBlank()) {
                 int index = categoryList.getItems().indexOf(selected);
                 categoryList.getItems().set(index, newName);
-                // TODO: Update the cached map aswell
+                caching.updateCategory(originalName, newName);
             }
         });
     }
@@ -61,7 +80,7 @@ public class ManageCategoriesController implements Initializable {
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
                 categoryList.getItems().remove(selected);
-                // TODO: Remove from the cached map aswell
+                caching.deleteCategory(selected);
             }
         });
     }

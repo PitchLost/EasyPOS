@@ -21,6 +21,8 @@ public class HomeService {
     public ArrayList<Order> orders = new ArrayList<>();
     ArrayList<Order> cachedOrders = new ArrayList<>();
 
+    CacheService caching = new CacheService();
+
     /** Index into {@code orders} pointing to the currently active order. */
     int orderIndex;
 
@@ -44,11 +46,13 @@ public class HomeService {
      * orders are already present.
      */
     public void init() {
+        orders = caching.loadOrders();
         if (!orders.isEmpty()) {
             return;
         }
         newOrder();
         selectOrder(orders.get(0));
+        saveOrders(); // Orders updated, update the save (Even if it is just 1)
     }
 
     /**
@@ -59,6 +63,7 @@ public class HomeService {
     public void addItem(Item item) {
         Order currentOrder = orders.get(orderIndex);
         currentOrder.addItem(item);
+        saveOrders(); // Orders updated, update the save
     }
 
     /**
@@ -71,6 +76,7 @@ public class HomeService {
         System.out.println("HomeService.voidItem()");
         currentOrder.voidItem(item);
         incrementTotal(new BigDecimal("0.00").subtract(item.getItemPrice()));
+        saveOrders(); // Orders updated, update the save
     }
 
     /**
@@ -112,6 +118,7 @@ public class HomeService {
     void editQty(OrderItem item, int qty) {
         Order currentOrder = orders.get(orderIndex);
         currentOrder.setItemQuantityById(item.getItemId(), qty);
+        saveOrders(); // Orders updated, update the save
     }
 
     /**
@@ -135,7 +142,7 @@ public class HomeService {
      */
     public void incrementTotal(BigDecimal total) {
         this.total = this.total.add(total);
-    }
+    } // TODO: Add this to the order??
 
     /**
      * Returns the most recently added item in the active order, or {@code null}
@@ -147,5 +154,13 @@ public class HomeService {
             return null;
         }
         return items.get(items.size() - 1);
+    }
+
+    // CACHING:
+
+    /** Uses {@link services.CacheService} to save the orders ArrayList
+     * */
+    public void saveOrders() {
+        caching.saveOrders(orders);
     }
 }
