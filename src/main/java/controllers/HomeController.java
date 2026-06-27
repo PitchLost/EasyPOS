@@ -38,13 +38,15 @@ public class HomeController implements Initializable {
     @FXML private Label orderTotalLabel;
     @FXML private Label orderPaidLabel;
     @FXML private FlowPane categoryContainer;
+    @FXML private Label OrderNameLabel;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        homeService.init();
         loadMenu();
         loadCategories();
+
+
         // Exit if menu is empty.. ie no items have been created yet so there's nothing to render
         if (menu.isEmpty()) {
             return;
@@ -147,6 +149,7 @@ public class HomeController implements Initializable {
     // Renders the items in the order onto the GUI
     private void renderOrderItems() {
         orderTotalLabel.setText(convertToMoney(homeService.getTotal()));
+        OrderNameLabel.setText(homeService.getActiveOrder().getOrderName());
         orderContainer.getChildren().clear();
 
         for (OrderItem item : homeService.getCurrentOrderItems()) {
@@ -160,6 +163,7 @@ public class HomeController implements Initializable {
     // Handlers
 
     // Handle when an item is clicked (Added to the order from the bottom part of the GUI)
+    @FXML
     private void handleItemClicked(Item item) {
         homeService.addItem(item);
         selectedItem = homeService.getTopItem();
@@ -167,7 +171,12 @@ public class HomeController implements Initializable {
         renderOrderItems();
     }
 
-    // Handle the action button "Checkout Order"
+    @FXML
+    public void handleNewOrder() {
+
+    }
+
+    @FXML
     public void handleToPaymentClicked() {
         paymentService = new PaymentService(homeService.getTotal(), homeService.getActiveOrder());
         Stage stage = (Stage) itemScrollPane.getScene().getWindow(); // Get the active stage object from a loaded FXML element
@@ -178,15 +187,40 @@ public class HomeController implements Initializable {
         });
     }
 
-    public void handleToSettingsClicked() {
+    @FXML
+    public void handleToOrdersClicked() {
         Stage stage = (Stage) itemScrollPane.getScene().getWindow();
-        NavigationController.navigateTo(stage, "/FXML/settings.fxml");
+        NavigationController.navigateTo(stage, "/FXML/orders.fxml");
     }
 
+    @FXML
+    public void handleEditName() {
+
+    }
+
+    @FXML
+    public void handleEditQty() {
+
+    }
+
+    @FXML
     public void handleVoidItem() {
         homeService.voidItem(selectedItem);
         selectedItem = homeService.getTopItem();
         renderOrderItems();
+    }
+
+    @FXML
+    public void handleVoidOrder() {
+        homeService.removeOrder(homeService.getActiveOrder()); // TODO: Add confirmation
+        handleToOrdersClicked();
+        renderOrderItems();
+    }
+
+    @FXML
+    public void handleToSettingsClicked() {
+        Stage stage = (Stage) itemScrollPane.getScene().getWindow();
+        NavigationController.navigateTo(stage, "/FXML/settings.fxml");
     }
 
     // Helpers:

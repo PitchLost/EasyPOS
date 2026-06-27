@@ -22,7 +22,7 @@
     <!-- LEFT: Order Items -->
     <center>
         <VBox maxHeight="Infinity" maxWidth="Infinity" style="-fx-background-color: #0b111c; -fx-padding: 16; -fx-spacing: 8;">
-            <Label style="-fx-text-fill: #ffffff; -fx-font-size: 18; -fx-font-weight: bold; -fx-padding: 0 0 8 0;" text="Current Order" />
+            <Label fx:id="OrderNameLabel" style="-fx-text-fill: #ffffff; -fx-font-size: 18; -fx-font-weight: bold; -fx-padding: 0 0 8 0;" text="{Order.getName()}" />
             <ScrollPane fx:id="orderScrollPane" fitToWidth="true" style="-fx-background: #152645; -fx-background-color: #152645; -fx-border-color: #333333; -fx-border-radius: 6;" VBox.vgrow="ALWAYS">
                 <content>
                     <VBox fx:id="orderContainer" spacing="6.0" style="-fx-padding: 8;" />
@@ -37,16 +37,16 @@
     <right>
         <VBox alignment="CENTER" style="-fx-background-color: #0b111c; -fx-padding: 24; -fx-spacing: 12;">
             <Label style="-fx-text-fill: #cccccc; -fx-font-size: 18; -fx-font-weight: bold; -fx-padding: 0 0 8 0;" text="Actions" />
-            <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #0ced48; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Create New Order">
+            <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleNewOrder" style="-fx-background-color: #0ced48; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Create New Order">
             <font>
                <Font name="System Bold" size="12.0" />
             </font></Button>
             <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleToPaymentClicked" style="-fx-background-color: #186cb5; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Checkout Order" />
-            <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #186cb5; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Select Orders" />
-            <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Edit Order Name" />
-            <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Edit Item QTY" />
-            <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #3a1a1a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Void Item" />
-            <Button maxWidth="Infinity" mnemonicParsing="false" style="-fx-background-color: #ff0000; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Void Order" />
+            <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleToOrdersClicked" style="-fx-background-color: #186cb5; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Select Orders" />
+            <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleEditName" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Edit Order Name" />
+            <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleEditQty" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Edit Item QTY" />
+            <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleVoidItem" style="-fx-background-color: #3a1a1a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Void Item" />
+            <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleVoidOrder" style="-fx-background-color: #ff0000; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Void Order" />
             <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleToSettingsClicked" style="-fx-background-color: #186cb5; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;" text="Settings" />
         </VBox>
     </right>

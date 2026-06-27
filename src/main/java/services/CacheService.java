@@ -1,6 +1,5 @@
 package services;
 
-import jdk.jfr.Category;
 import models.Item;
 import models.Order;
 
@@ -24,6 +23,7 @@ public class CacheService {
     private static final String DATA_DIR = System.getProperty("user.home") + "/.easypos/"; // Edit this if you want to change the save directory
     private static final String MENU_FILE = DATA_DIR + "menu.json";
     private static final String ORDERS_FILE = DATA_DIR + "orders.json";
+    private static final String OLD_ORDERS_FILE = DATA_DIR + "old_orders.json";
     private static final String CATEGORIES_FILE = DATA_DIR + "categories.json";
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -146,6 +146,36 @@ public class CacheService {
         }
     }
 
+    public void saveOldOrders(ArrayList<Order> oldOrders) {
+        try {
+            ensureDataDirExists();
+            String json = gson.toJson(oldOrders);
+            Files.writeString(Paths.get(OLD_ORDERS_FILE), json);
+            System.out.println("Old Orders have been saved! :)");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<Order> loadOldOrders() {
+        try {
+            if (!Files.exists(Paths.get(OLD_ORDERS_FILE))) return new ArrayList<>();
+            String json = Files.readString(Paths.get(OLD_ORDERS_FILE));
+            Type type = new TypeToken<ArrayList<Order>>() {
+            }.getType();
+            return gson.fromJson(json, type);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public void addNewCompletedOrder(Order completedOrder) {
+        ArrayList<Order> oldOrders = loadOldOrders();
+        oldOrders.add(completedOrder);
+        saveOldOrders(oldOrders);
+    }
+
     // CATEGORIES:
 
     public void saveCategories(ArrayList<String> categories) {
@@ -195,13 +225,9 @@ public class CacheService {
      */
     public void deleteCategory(String category) {
         ArrayList<String> categories = loadCategories();
-        for (int i = 0; i < categories.size(); i++) {
-            if (categories.get(i).equals(category)) {
-                categories.remove(i);
-            }
-        }
-
-        }
+        categories.removeIf(c -> c.equals(category));
+        saveCategories(categories);
+    }
 
     /**
      * Adds a new category to the categories list.

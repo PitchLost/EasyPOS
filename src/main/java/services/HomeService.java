@@ -92,21 +92,42 @@ public class HomeService {
      */
     public void newOrder() {
         // Create new order and add it to the orders ArrayList
-        Order newOrder = new Order(orders.size(), "No Name");
+        Order newOrder = new Order(orders.size(), "");
         orders.add(newOrder);
 
-        // TODO: Cache order
+        caching.saveOrders(orders);
         selectOrder(newOrder);
     }
+
+    public void removeOrder(Order order) {
+        for (int i = 0; i < orders.size(); i++) {
+            if (orders.get(i).getOrderId().equals(order.getOrderId())) {
+                caching.addNewCompletedOrder(orders.get(i));
+                orders.remove(i);
+            }
+        }
+        if (!orders.isEmpty()) {
+            orderIndex = 0;
+            selectOrder(orders.get(0));
+        } else {
+            newOrder();
+        }
+        saveOrders();
+    }
+
 
     /**
      * Switches the active order to the one provided.
      *
-     * @param order the order to make active (Order type)
+     * @param order the order to make active as an {@link Order}
      */
     public void selectOrder(Order order) {
-        orderIndex = order.getOrderIndex();
-        // TODO: Send some sort of UI update
+        for (int i = 0; i < orders.size(); i++) {
+            if (orders.get(i).getOrderId().equals(order.getOrderId())) {
+                orderIndex = i;
+                return;
+            }
+        }
     }
 
     /**
@@ -156,6 +177,9 @@ public class HomeService {
         return items.get(items.size() - 1);
     }
 
+    public ArrayList<Order> getOrders() {
+        return orders;
+    }
     // CACHING:
 
     /** Uses {@link services.CacheService} to save the orders ArrayList

@@ -1,21 +1,26 @@
 package models;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.UUID;
 import models.Item;
 import models.OrderItem;
+
 
 public class Order {
     String orderName;
     int orderIndex;
+    UUID orderId;
     ArrayList<OrderItem> orderItems = new ArrayList<>();
     Boolean orderCompleted = false;
 
 
     // Constructor
     public Order(int idx, String name) {
-        if (name == "") {
-            name = "No Name Provided";
+        if (name.isEmpty()) {
+            name = "Order " + idx;
         }
         orderName = name;
+        orderId =  UUID.randomUUID();
         orderIndex = idx;
     }
 
@@ -54,13 +59,20 @@ public class Order {
         return orderIndex;
     }
 
-    // Return a string representation of the order
-    public String getOrderRepr() {
-        String returnString = orderName + "\n";
-        for (int i = 0; i < orderItems.size(); i++) {
-            returnString = returnString + orderItems.get(i).getItemId() + "\n";
+    public UUID getOrderId() {
+        return orderId;
+    }
+
+    public String getOrderName() {
+        return orderName;
+    }
+
+    public BigDecimal getOrderTotal() {
+        BigDecimal total = BigDecimal.ZERO;
+        for (OrderItem item : orderItems) {
+            total = total.add(item.getItemPrice());
         }
-        return returnString;
+        return total;
     }
 
     // Setters:
