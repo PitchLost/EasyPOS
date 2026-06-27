@@ -96,7 +96,7 @@ public class HomeController implements Initializable {
         // Reset all tab styles, then highlight the selected one
         for (var node : categoryContainer.getChildren()) {
             node.setStyle(
-                    "-fx-background-color: #1a1a2e;" +
+                    "-fx-background-color: #2f12b3;" +
                             "-fx-text-fill: #aaaaaa;" +
                             "-fx-font-size: 13;" +
                             "-fx-background-radius: 6;" +
@@ -107,7 +107,7 @@ public class HomeController implements Initializable {
         }
 
         btn.setStyle(
-                "-fx-background-color: #e8a020;" +
+                "-fx-background-color: #2f12b3;" +
                         "-fx-text-fill: #ffffff;" +
                         "-fx-font-size: 13;" +
                         "-fx-font-weight: bold;" +
@@ -130,7 +130,7 @@ public class HomeController implements Initializable {
             btn.setPrefWidth(200);
             btn.setPrefHeight(80);
             btn.setStyle(
-                    "-fx-background-color: #2a2a2a;" +
+                    "-fx-background-color: #157cbd;" +
                             "-fx-text-fill: #ffffff;" +
                             "-fx-font-size: 15;" +
                             "-fx-background-radius: 8;" +
