@@ -10,7 +10,8 @@ public class OrderItem {
     int itemId;
     int itemQuantity;
     ArrayList<String> itemOptions = new ArrayList<>();
-    BigDecimal itemPrice;
+    BigDecimal itemPrice; // The price of the item*qty
+    BigDecimal unitPrice; // The original price of the item
 
     // Constructor. Can pass an empty ArrayList for options if none
     public OrderItem(String name, int id, int quantity, ArrayList<String> options, BigDecimal price) {
@@ -19,6 +20,7 @@ public class OrderItem {
         itemQuantity = quantity;
         itemOptions = options;
         itemPrice = price;
+        unitPrice = price;
     }
 
     // Getter for item quantity
@@ -37,14 +39,23 @@ public class OrderItem {
         return String.format("%dx %s%s", itemQuantity, itemName, options);
     }
 
+
     // Getter for item id
     public int getItemId() {
         return itemId;
     }
 
     // Getter for item price
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
+    }
+
     public BigDecimal getItemPrice() {
         return itemPrice;
+    }
+
+    public void setItemPrice(BigDecimal itemPrice) {
+        this.itemPrice = itemPrice;
     }
 
     public String getItemName() {

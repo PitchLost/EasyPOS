@@ -78,11 +78,14 @@ public class Order {
     // Setters:
 
     // Set the items qty by the ID of the item.
-    // TODO: Can this be faster than O(n)??
     public void setItemQuantityById(int id, int quantity) {
         for (int i = 0; i < orderItems.size(); i++) {
             if (orderItems.get(i).getItemId() == id) {
-                orderItems.set(quantity, orderItems.get(i));
+                OrderItem orderItem = orderItems.get(i);
+                orderItem.setItemQuantity(quantity);
+                orderItem.setItemPrice(orderItem.getUnitPrice().multiply(new BigDecimal(quantity)));
+
+                return;
             }
         }
     }

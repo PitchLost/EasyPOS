@@ -17,7 +17,7 @@ import com.google.gson.reflect.TypeToken;
 /**
  * Handles reading and writing persistent data to disk.
  * All app data is stored as JSON under ~/.easypos/
- * This is the only class that should directly access those files.
+ * This is the only class that should directly access those files. It provides helpers for other classes to use to load/save these files
  */
 public class CacheService {
     private static final String DATA_DIR = System.getProperty("user.home") + "/.easypos/"; // Edit this if you want to change the save directory

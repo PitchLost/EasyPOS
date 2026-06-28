@@ -4,6 +4,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import services.HomeService;
 
+/**
+ * The entrypoint for the program. This sets up FXML, navigates to the home screen, and initialises the {@link HomeService}
+ */
 public class App extends Application {
 
     @Override

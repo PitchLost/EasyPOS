@@ -1,5 +1,6 @@
 package controllers;
 
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import models.Item;
@@ -156,6 +157,17 @@ public class HomeController implements Initializable {
             Label pane = new Label(item.getItemName() + " x" + item.getItemQuantity() + "  $" + item.getItemPrice());
             pane.setStyle("-fx-border-color: grey; -fx-padding: 8;");
             pane.setMaxWidth(Double.MAX_VALUE);
+
+            pane.setOnMouseClicked(e -> {
+                // Reset all labels to default style
+                for (var node : orderContainer.getChildren()) {
+                    node.setStyle("-fx-border-color: grey; -fx-padding: 8;");
+                }
+                // Highlight selected
+                pane.setStyle("-fx-border-color: #e8a020; -fx-padding: 8; -fx-background-color: #1a2a3a;");
+                selectedItem = item;
+            });
+
             orderContainer.getChildren().add(pane);
         }
     }
@@ -173,7 +185,8 @@ public class HomeController implements Initializable {
 
     @FXML
     public void handleNewOrder() {
-
+        homeService.newOrder();
+        renderOrderItems();
     }
 
     @FXML
@@ -200,7 +213,26 @@ public class HomeController implements Initializable {
 
     @FXML
     public void handleEditQty() {
+        if (selectedItem == null) return;
 
+        TextInputDialog dialog = new TextInputDialog(String.valueOf(selectedItem.getItemQuantity()));
+        dialog.setTitle("Edit Quantity");
+        dialog.setHeaderText("Edit quantity for \"" + selectedItem.getItemName() + "\"");
+        dialog.setContentText("New quantity:");
+        dialog.initOwner(itemScrollPane.getScene().getWindow());
+
+        dialog.showAndWait().ifPresent(newQty -> {
+            if (!newQty.isBlank()) {
+                try {
+                    int qty = Integer.parseInt(newQty);
+                    homeService.editQty(selectedItem, qty);
+                    selectedItem = null;
+                    renderOrderItems();
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid quantity"); // TODO: Show an actual error
+                }
+            }
+        });
     }
 
     @FXML
