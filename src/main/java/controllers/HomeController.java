@@ -149,6 +149,7 @@ public class HomeController implements Initializable {
 
     // Renders the items in the order onto the GUI
     private void renderOrderItems() {
+        homeService.recalculateTotal();
         orderTotalLabel.setText(convertToMoney(homeService.getTotal()));
         OrderNameLabel.setText(homeService.getActiveOrder().getOrderName());
         orderContainer.getChildren().clear();
@@ -237,6 +238,9 @@ public class HomeController implements Initializable {
 
     @FXML
     public void handleVoidItem() {
+        if (selectedItem == null) {
+            selectedItem = homeService.getTopItem(); // Sometimes selectedItem is null for some reason when it should be the top item
+        };
         homeService.voidItem(selectedItem);
         selectedItem = homeService.getTopItem();
         renderOrderItems();

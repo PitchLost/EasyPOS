@@ -119,7 +119,7 @@ public class HomeService {
     }
 
     /** Recalculates the running total from scratch using the active order's items. */
-    private void recalculateTotal() {
+    public void recalculateTotal() {
         total = BigDecimal.ZERO;
         for (OrderItem item : getActiveOrder().getOrderItems()) {
             total = total.add(item.getItemPrice());
