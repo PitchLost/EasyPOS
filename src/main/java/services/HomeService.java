@@ -138,6 +138,16 @@ public class HomeService {
         recalculateTotal();
     }
 
+    /**
+     * Updates the name of the selected order
+     * @param name the new name as a {@link String}
+     */
+    public void editOrderName(String name) {
+        Order currentOrder = orders.get(orderIndex);
+        currentOrder.setOrderName(name);
+        saveOrders();
+    }
+
     /** Returns the current running total across all additions and voids. */
     public BigDecimal getTotal() {
         return this.total;

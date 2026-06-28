@@ -149,7 +149,7 @@ public class HomeController implements Initializable {
 
     // Renders the items in the order onto the GUI
     private void renderOrderItems() {
-        homeService.recalculateTotal();
+        homeService.recalculateTotal(); // Ensure the total has been calculated since loading the orders from cache
         orderTotalLabel.setText(convertToMoney(homeService.getTotal()));
         OrderNameLabel.setText(homeService.getActiveOrder().getOrderName());
         orderContainer.getChildren().clear();
@@ -209,7 +209,23 @@ public class HomeController implements Initializable {
 
     @FXML
     public void handleEditName() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Edit Order Name");
+        dialog.setHeaderText("Edit Name for \"" + homeService.getActiveOrder().getOrderName() + "\"");
+        dialog.setContentText("New Name:");
+        dialog.initOwner(itemScrollPane.getScene().getWindow());
 
+        dialog.showAndWait().ifPresent(newName -> {
+            if (!newName.isBlank()) {
+                try {
+                    homeService.editOrderName(newName);
+                    selectedItem = null;
+                    renderOrderItems();
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid quantity"); // TODO: Show an actual error
+                }
+            }
+        });
     }
 
     @FXML
