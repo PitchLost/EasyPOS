@@ -2,6 +2,7 @@ package controllers;
 
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import models.Item;
 import models.OrderItem;
@@ -24,6 +25,20 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
+    private static final String[] CATEGORY_COLORS = {
+            "#c0392b", // red
+            "#d35400", // orange
+            "#27ae60", // green
+            "#2980b9", // blue
+            "#8e44ad", // purple
+            "#16a085", // teal
+            "#f39c12", // yellow
+            "#2c3e50", // dark navy
+            "#e91e63", // pink
+            "#00bcd4"  // cyan
+    };
+
+
     HomeService homeService = HomeService.getInstance();
     PaymentService paymentService;
     CacheService caching = new CacheService();
@@ -38,7 +53,7 @@ public class HomeController implements Initializable {
     @FXML private VBox orderContainer;
     @FXML private Label orderTotalLabel;
     @FXML private Label orderPaidLabel;
-    @FXML private FlowPane categoryContainer;
+    @FXML private HBox categoryContainer;
     @FXML private Label OrderNameLabel;
 
 
@@ -99,7 +114,7 @@ public class HomeController implements Initializable {
         // Reset all tab styles, then highlight the selected one
         for (var node : categoryContainer.getChildren()) {
             node.setStyle(
-                    "-fx-background-color: #2f12b3;" +
+                    "-fx-background-color: #1a1a2e;" +
                             "-fx-text-fill: #aaaaaa;" +
                             "-fx-font-size: 13;" +
                             "-fx-background-radius: 6;" +
@@ -130,12 +145,12 @@ public class HomeController implements Initializable {
 
         for (Item item : items) {
             Button btn = new Button(item.getName() + "\n$" + item.getItemPrice());
-            btn.setPrefWidth(200);
-            btn.setPrefHeight(80);
+            btn.setPrefWidth(120);
+            btn.setPrefHeight(50);
             btn.setStyle(
                     "-fx-background-color: #157cbd;" +
                             "-fx-text-fill: #ffffff;" +
-                            "-fx-font-size: 15;" +
+                            "-fx-font-size: 12;" +
                             "-fx-background-radius: 8;" +
                             "-fx-border-color: #333333;" +
                             "-fx-border-radius: 8;" +
@@ -222,7 +237,7 @@ public class HomeController implements Initializable {
                     selectedItem = null;
                     renderOrderItems();
                 } catch (NumberFormatException e) {
-                    System.out.println("Invalid quantity"); // TODO: Show an actual error
+                    System.out.println("Invalid name"); // TODO: Show an actual error
                 }
             }
         });

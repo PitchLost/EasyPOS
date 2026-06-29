@@ -40,7 +40,11 @@ public class PaymentController implements Initializable {
     @FXML
     private HBox notePane;
     @FXML
-    private Label paymentOrderStatusLabel;
+    private Label orderStatusLabel;
+    @FXML
+    private Label orderName;
+    @FXML
+    private Button markOrderCompleteButton;
 
 
     // Init, Sets some default values and placeholder values for FXML elements
@@ -55,7 +59,9 @@ public class PaymentController implements Initializable {
     // Render items on the GUI
     private void renderItems() {
         coinPane.getChildren().clear();
-        paymentOrderStatusLabel.setText(String.valueOf(activeOrder.getOrderCompleted()));
+        updateCompleteButton();
+        orderName.setText(activeOrder.getOrderName());
+
 
         // TODO: Merge these into 1 loop?
         for (String coin : coinButtons) {
@@ -127,11 +133,20 @@ public class PaymentController implements Initializable {
         paymentRemaining.setText(totalDue.setScale(2, RoundingMode.HALF_UP).toString());
     }
 
+    // ACTIONS:
 
-    // Action functions
     public void markOrderComplete() {
         activeOrder.setOrderComplete(!activeOrder.getOrderCompleted());
-        paymentOrderStatusLabel.setText(String.valueOf(activeOrder.getOrderCompleted()));
+        updateCompleteButton();
+    }
+
+    private void updateCompleteButton() {
+        boolean completed = activeOrder.getOrderCompleted();
+        orderStatusLabel.setText(completed ? "Paid" : "Not Paid");
+        markOrderCompleteButton.setStyle(completed
+                ? "-fx-background-color: #ff0000; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;"
+                : "-fx-background-color: #46b019; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;"
+        );
     }
 
     public void toHome() {
@@ -141,8 +156,9 @@ public class PaymentController implements Initializable {
     }
 
     public void toSelectOrder() {
+        Stage stage = (Stage) coinPane.getScene().getWindow();
+        NavigationController.navigateTo(stage, "/FXML/orders.fxml");
     }
 
-    //TODO:
-    // Make amount remaining not bottom out at 0
+
 }

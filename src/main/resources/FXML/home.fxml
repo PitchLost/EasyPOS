@@ -55,14 +55,14 @@
     <bottom>
         <VBox style="-fx-background-color: #152645; -fx-padding: 16; -fx-spacing: 8;">
             <Label style="-fx-text-fill: #cccccc; -fx-font-size: 18; -fx-font-weight: bold; -fx-padding: 0 0 8 0;" text="Items" />
-            <ScrollPane fx:id="itemScrollPane" fitToWidth="true" style="-fx-background: #0b111c; -fx-background-color: #0b111c; -fx-border-color: #333333; -fx-border-radius: 6;" VBox.vgrow="ALWAYS">
+            <ScrollPane fitToHeight="true" hbarPolicy="AS_NEEDED" style="-fx-background: #0b111c; -fx-background-color: transparent;" vbarPolicy="NEVER">
                 <content>
-                    <FlowPane fx:id="categoryContainer" hgap="8" style="-fx-padding: 8;" vgap="8" />
+                    <HBox fx:id="categoryContainer" spacing="8" style="-fx-padding: 4;" />
                 </content>
             </ScrollPane>
-         <ScrollPane fx:id="itemScrollPane1" fitToWidth="true" layoutX="26.0" layoutY="65.0" style="-fx-background: #0b111c; -fx-background-color: #0b111c; -fx-border-color: #333333; -fx-border-radius: 6;">
+         <ScrollPane fx:id="itemScrollPane" fitToWidth="true" layoutX="26.0" layoutY="65.0" prefHeight="80.0" style="-fx-background: #0b111c; -fx-background-color: #0b111c; -fx-border-color: #333333; -fx-border-radius: 6;">
             <content>
-               <FlowPane fx:id="itemContainer" hgap="8" style="-fx-padding: 8;" vgap="8" />
+               <FlowPane fx:id="itemContainer" hgap="4" style="-fx-padding: 8;" vgap="8" />
             </content>
          </ScrollPane>
         </VBox>

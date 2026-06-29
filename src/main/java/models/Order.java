@@ -54,6 +54,10 @@ public class Order {
         return orderCompleted;
     }
 
+    public void setOrderComplete(Boolean to) {
+        orderCompleted = to;
+    }
+
 
     public int getOrderIndex() {
         return orderIndex;
@@ -75,8 +79,6 @@ public class Order {
         return total;
     }
 
-    // Setters:
-
     // Set the items qty by the ID of the item.
     public void setItemQuantityById(int id, int quantity) {
         for (int i = 0; i < orderItems.size(); i++) {
@@ -93,7 +95,5 @@ public class Order {
         this.orderName = orderName;
     }
 
-    public void setOrderComplete(Boolean to) {
-        orderCompleted = to;
-    }
+
     }
