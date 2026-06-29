@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane style="-fx-background-color: #0b111c;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.OrdersController">
+<BorderPane style="-fx-background-color: #0b111c;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.OrdersController">
 
     <top>
         <HBox alignment="CENTER_LEFT" style="-fx-background-color: #111111; -fx-padding: 12 24; -fx-spacing: 32;">
@@ -27,8 +32,8 @@
     <bottom>
         <HBox alignment="CENTER_RIGHT" spacing="12" style="-fx-background-color: #111111; -fx-padding: 16 24;">
             <Button mnemonicParsing="false" onAction="#handleToHome" style="-fx-background-color: #e8a020; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12 24; -fx-background-radius: 6;" text="Home" />
-         <Button layoutX="246.0" layoutY="26.0" mnemonicParsing="false" onAction="#handleToHome" style="-fx-background-color: #186cb5; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12 24; -fx-background-radius: 6;" text="Select Order" />
-         <Button layoutX="209.0" layoutY="26.0" mnemonicParsing="false" onAction="#handleToHome" style="-fx-background-color: #186cb5; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12 24; -fx-background-radius: 6;" text="Checkout" />
+         <Button layoutX="246.0" layoutY="26.0" mnemonicParsing="false" onAction="#handleSelectOrder" style="-fx-background-color: #186cb5; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12 24; -fx-background-radius: 6;" text="Select Order" />
+         <Button layoutX="209.0" layoutY="26.0" mnemonicParsing="false" onAction="#handleCheckoutOrder" style="-fx-background-color: #186cb5; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12 24; -fx-background-radius: 6;" text="Checkout" />
             <Button mnemonicParsing="false" onAction="#handleNewOrder" style="-fx-background-color: #0ced48; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12 24; -fx-background-radius: 6;" text="New Order" />
         </HBox>
     </bottom>
