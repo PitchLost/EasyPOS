@@ -13,32 +13,61 @@ import services.HomeService;
 import services.PaymentService;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
+/** The controller for the orders view screen. Also has an option to display old orders too. This one doesnt follow the normal function layout
+ * because pretty much every FXML handler has a private funciton that it also uses so it's more maintainable in this format.*/
 public class OrdersController implements Initializable {
     HomeService homeService = HomeService.getInstance();
     Order selectedOrder = null;
+    boolean viewingOldOrders = false;
+    private static final int MAX_DISPLAY_OLD_ORDERS = 100; // TODO: Make user configurable
 
+    // FXML Elements
     @FXML private FlowPane orderContainer;
     @FXML private ScrollPane orderScrollPane;
+    @FXML private Button toggleViewButton;
+
+    // TODO: Delete this from FXML cause they are unused and crash if undeclared here
+    @FXML private Button checkoutButton;
+    @FXML private Button selectButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         renderOrders();
+        updateToggleButton();
     }
+
+    // FXML HANDLERS
+
+    @FXML
+    public void handleToggleOldOrders() {
+        viewingOldOrders = !viewingOldOrders;
+        updateToggleButton();
+        renderOrders();
+    }
+
+
 
     private void renderOrders() {
         orderContainer.getChildren().clear();
         selectedOrder = null;
 
-        for (Order order : homeService.getOrders()) {
+        ArrayList<Order> oldOrders = homeService.getOldOrders();
+        List<Order> ordersToShow = viewingOldOrders
+                ? oldOrders.subList(Math.max(0, oldOrders.size() - MAX_DISPLAY_OLD_ORDERS), oldOrders.size())
+                : homeService.getOrders();
+
+        for (Order order : ordersToShow) {
             VBox card = new VBox(6);
             card.setPrefWidth(200);
             card.setPrefHeight(120);
             card.setUserData(order);
             setCardStyle(card, false);
 
-            Label name  = new Label(order.getOrderName());
+            Label name = new Label(order.getOrderName());
             name.setStyle("-fx-text-fill: #ffffff; -fx-font-size: 14; -fx-font-weight: bold;");
 
             Label index = new Label("Order " + order.getOrderIndex());
@@ -59,7 +88,6 @@ public class OrdersController implements Initializable {
     private void handleOrderCardClicked(Order order, VBox card) {
         selectedOrder = order;
 
-        // Reset all cards then highlight selected
         for (var node : orderContainer.getChildren()) {
             setCardStyle((VBox) node, false);
         }
@@ -86,9 +114,15 @@ public class OrdersController implements Initializable {
     @FXML
     public void handleCheckoutOrder() {
         if (selectedOrder == null) return;
-        homeService.selectOrder(selectedOrder);
-       PaymentService paymentService = new PaymentService(homeService.getTotal(), homeService.getActiveOrder());
-        Stage stage = (Stage) orderContainer.getScene().getWindow(); // Get the active stage object from a loaded FXML element
+
+        Order orderToUse = selectedOrder;
+        if (viewingOldOrders) {
+            orderToUse = homeService.recoverOrder(selectedOrder);
+        }
+
+        homeService.selectOrder(orderToUse);
+        PaymentService paymentService = new PaymentService(homeService.getTotal(), homeService.getActiveOrder());
+        Stage stage = (Stage) orderContainer.getScene().getWindow();
 
         NavigationController.navigateTo(stage, "/FXML/payment.fxml", controller -> {
             PaymentController c = (PaymentController) controller;
@@ -99,7 +133,13 @@ public class OrdersController implements Initializable {
     @FXML
     public void handleSelectOrder() {
         if (selectedOrder == null) return;
-        homeService.selectOrder(selectedOrder);
+
+        if (viewingOldOrders) {
+            homeService.recoverOrder(selectedOrder);
+        } else {
+            homeService.selectOrder(selectedOrder);
+        }
+
         Stage stage = (Stage) orderContainer.getScene().getWindow();
         NavigationController.navigateTo(stage, "/FXML/home.fxml");
     }
@@ -108,5 +148,14 @@ public class OrdersController implements Initializable {
     public void handleToHome() {
         Stage stage = (Stage) orderScrollPane.getScene().getWindow();
         NavigationController.navigateTo(stage, "/FXML/home.fxml", null);
+    }
+
+    // HELPER FUNCTIONS
+    private void updateToggleButton() {
+        toggleViewButton.setText(viewingOldOrders ? "View Active Orders" : "View Old Orders");
+        toggleViewButton.setStyle(viewingOldOrders
+                ? "-fx-background-color: #46b019; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;"
+                : "-fx-background-color: #ff0000; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12; -fx-background-radius: 6;"
+        );
     }
 }

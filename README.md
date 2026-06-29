@@ -48,3 +48,8 @@ TODO
 - Other things that you can config is the note and coin buttons on the payment menu aswell as some additional behaviour of the payment menu
 - There is also a "Reset EasyPOS" button on the settings page, this will delete all your items, categories, and config. So be careful with this!
 
+- HANDLERS
+- FXML HANDLERS
+- HELPERS
+- GETTERS
+- SETTERS

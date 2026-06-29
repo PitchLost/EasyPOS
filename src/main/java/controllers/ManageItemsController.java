@@ -11,6 +11,9 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.util.*;
 
+/**
+ * The controller for the item management modal. Very similar to {@link ManageCategoriesController} but both control a different modal.
+ */
 public class ManageItemsController implements Initializable {
     CacheService caching = new CacheService();
 

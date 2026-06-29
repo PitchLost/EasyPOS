@@ -7,15 +7,14 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
-import models.Item;
 import services.CacheService;
-
-import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 import java.util.ResourceBundle;
+
+/**
+ * The controller for the category management modal. Very similar to {@link ManageItemsController} but both control a different modal.
+ */
 
 public class ManageCategoriesController implements Initializable {
     CacheService caching = new CacheService();
@@ -26,6 +25,7 @@ public class ManageCategoriesController implements Initializable {
         ArrayList<String> categories = caching.loadCategories();
         categoryList.getItems().addAll(categories);
     }
+    // FXML HANDLERS
     @FXML
     public void handleDone() {
         Stage stage = (Stage) categoryList.getScene().getWindow();

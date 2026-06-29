@@ -64,6 +64,11 @@
             </font>
          </Button>
          <Label fx:id="orderStatusLabel" layoutX="688.0" layoutY="38.0" style="-fx-text-fill: white; -fx-font-size: 28; -fx-font-weight: bold;" text="NULL" />
+         <Button fx:id="markOrderCompleteButton" layoutX="470.0" layoutY="34.0" mnemonicParsing="false" onAction="#finishOrder" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #3a1a1a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Complete">
+            <font>
+               <Font size="36.0" />
+            </font>
+         </Button>
       </HBox>
    </bottom>
 

@@ -182,6 +182,23 @@ public class HomeService {
         return orders;
     }
 
+    public ArrayList<Order> getOldOrders() {
+        return caching.loadOldOrders();
+    }
+
+    /** Creates a new active order recovered from an old order, named "Recovered - {originalName}". */
+    public Order recoverOrder(Order oldOrder) {
+        Order recovered = new Order(orders.size(), "Recovered - " + oldOrder.getOrderName());
+        for (OrderItem item : oldOrder.getOrderItems()) {
+            recovered.getOrderItems().add(item);
+        }
+        recovered.setOrderComplete(true);
+        orders.add(recovered);
+        selectOrder(recovered);
+        saveOrders();
+        return recovered;
+    }
+
     /** Uses {@link CacheService} to save the orders ArrayList. */
     public void saveOrders() {
         caching.saveOrders(orders);

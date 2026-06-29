@@ -1,44 +1,30 @@
 package controllers;
 
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import models.Item;
+import models.Order;
 import models.OrderItem;
 import services.CacheService;
 import services.HomeService;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import services.PaymentService;
 
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.ResourceBundle;
 
+/** The controller class for the Home screen. Works with HomeService to render everything on the home screen and has all the logic for creating new orders, adding items
+ * to the order etc. No {@link HomeController} functions are called from {@link HomeService}*/
+
 public class HomeController implements Initializable {
-    private static final String[] CATEGORY_COLORS = {
-            "#c0392b", // red
-            "#d35400", // orange
-            "#27ae60", // green
-            "#2980b9", // blue
-            "#8e44ad", // purple
-            "#16a085", // teal
-            "#f39c12", // yellow
-            "#2c3e50", // dark navy
-            "#e91e63", // pink
-            "#00bcd4"  // cyan
-    };
-
-
     HomeService homeService = HomeService.getInstance();
     PaymentService paymentService;
     CacheService caching = new CacheService();
@@ -47,23 +33,23 @@ public class HomeController implements Initializable {
     String selectedCategory;
     OrderItem selectedItem;
 
+    // FXML ELEMENTS
     @FXML private ScrollPane itemScrollPane;
     @FXML private FlowPane itemContainer;
-    @FXML private ScrollPane orderScrollPane;
     @FXML private VBox orderContainer;
     @FXML private Label orderTotalLabel;
-    @FXML private Label orderPaidLabel;
     @FXML private HBox categoryContainer;
     @FXML private Label OrderNameLabel;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Get menu and categories from cache
         loadMenu();
         loadCategories();
 
 
-        // Exit if menu is empty.. ie no items have been created yet so there's nothing to render
+        // Exit if menu is empty. No items have been created yet so there's nothing to render
         if (menu.isEmpty()) {
             return;
         }
@@ -73,22 +59,12 @@ public class HomeController implements Initializable {
     }
 
 
-    // Load menu from caching
-    private void loadMenu() {
-        menu = caching.loadMenu();
-    }
-
-    //FIXME: Merge this and the menu
-    private void loadCategories() {
-        categories = caching.loadCategories();
-    }
-
-
+    // Render the category buttons
     private void renderCategories() {
         categoryContainer.getChildren().clear();
-        if (categories.isEmpty()) return;
+        if (categories.isEmpty()) return; // No categories to load
 
-        selectedCategory = categories.get(0);
+        selectedCategory = categories.get(0); // Just select the first one
 
         for (String category : categories) {
             Button btn = new Button(category);
@@ -104,14 +80,14 @@ public class HomeController implements Initializable {
                             "-fx-border-width: 1;"
             );
             btn.setOnAction(e -> handleCategoryClicked(category, btn));
-            categoryContainer.getChildren().add(btn);
+            categoryContainer.getChildren().add(btn); // TODO: Hightlight the first button
         }
     }
 
     private void handleCategoryClicked(String category, Button btn) {
         selectedCategory = category;
 
-        // Reset all tab styles, then highlight the selected one
+        // Reset all button styles, then highlight the selected one
         for (var node : categoryContainer.getChildren()) {
             node.setStyle(
                     "-fx-background-color: #1a1a2e;" +
@@ -123,7 +99,7 @@ public class HomeController implements Initializable {
                             "-fx-border-width: 1;"
             );
         }
-
+        // Set the selected buttons styles
         btn.setStyle(
                 "-fx-background-color: #2f12b3;" +
                         "-fx-text-fill: #ffffff;" +
@@ -134,15 +110,17 @@ public class HomeController implements Initializable {
                         "-fx-border-radius: 6;" +
                         "-fx-border-width: 1;"
         );
-
         renderItems();
     }
+
+
     // Render items on the GUI
     private void renderItems() {
         itemContainer.getChildren().clear();
-        ArrayList<Item> items = menu.get(selectedCategory);
-        if (items == null) return;
+        ArrayList<Item> items = menu.get(selectedCategory); // Get the items from the menu map for the selectedCategory
+        if (items == null) return; // No items to load
 
+        // Create button for each item
         for (Item item : items) {
             Button btn = new Button(item.getName() + "\n$" + item.getItemPrice());
             btn.setPrefWidth(120);
@@ -169,11 +147,13 @@ public class HomeController implements Initializable {
         OrderNameLabel.setText(homeService.getActiveOrder().getOrderName());
         orderContainer.getChildren().clear();
 
+        // Create a clickable pane for each orderItem
         for (OrderItem item : homeService.getCurrentOrderItems()) {
             Label pane = new Label(item.getItemName() + " x" + item.getItemQuantity() + "  $" + item.getItemPrice());
             pane.setStyle("-fx-border-color: grey; -fx-padding: 8;");
             pane.setMaxWidth(Double.MAX_VALUE);
 
+            // When a pane is clicked (Selected)
             pane.setOnMouseClicked(e -> {
                 // Reset all labels to default style
                 for (var node : orderContainer.getChildren()) {
@@ -183,14 +163,12 @@ public class HomeController implements Initializable {
                 pane.setStyle("-fx-border-color: #e8a020; -fx-padding: 8; -fx-background-color: #1a2a3a;");
                 selectedItem = item;
             });
-
             orderContainer.getChildren().add(pane);
         }
     }
 
-    // Handlers
+    // FXML HANDLERS
 
-    // Handle when an item is clicked (Added to the order from the bottom part of the GUI)
     @FXML
     private void handleItemClicked(Item item) {
         homeService.addItem(item);
@@ -199,16 +177,18 @@ public class HomeController implements Initializable {
         renderOrderItems();
     }
 
+
     @FXML
     public void handleNewOrder() {
         homeService.newOrder();
         renderOrderItems();
     }
 
+
     @FXML
     public void handleToPaymentClicked() {
         paymentService = new PaymentService(homeService.getTotal(), homeService.getActiveOrder());
-        Stage stage = (Stage) itemScrollPane.getScene().getWindow(); // Get the active stage object from a loaded FXML element
+        Stage stage = (Stage) itemScrollPane.getScene().getWindow();
 
         NavigationController.navigateTo(stage, "/FXML/payment.fxml", controller -> {
             PaymentController c = (PaymentController) controller;
@@ -216,11 +196,13 @@ public class HomeController implements Initializable {
         });
     }
 
+
     @FXML
     public void handleToOrdersClicked() {
         Stage stage = (Stage) itemScrollPane.getScene().getWindow();
         NavigationController.navigateTo(stage, "/FXML/orders.fxml");
     }
+
 
     @FXML
     public void handleEditName() {
@@ -242,6 +224,7 @@ public class HomeController implements Initializable {
             }
         });
     }
+
 
     @FXML
     public void handleEditQty() {
@@ -267,22 +250,37 @@ public class HomeController implements Initializable {
         });
     }
 
+
     @FXML
     public void handleVoidItem() {
         if (selectedItem == null) {
-            selectedItem = homeService.getTopItem(); // Sometimes selectedItem is null for some reason when it should be the top item
-        };
+            selectedItem = homeService.getTopItem();
+        }
         homeService.voidItem(selectedItem);
         selectedItem = homeService.getTopItem();
         renderOrderItems();
     }
 
+
     @FXML
     public void handleVoidOrder() {
-        homeService.removeOrder(homeService.getActiveOrder()); // TODO: Add confirmation
-        handleToOrdersClicked();
-        renderOrderItems();
+        Order activeOrder = homeService.getActiveOrder();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Void Order");
+        alert.setHeaderText("Void \"" + activeOrder.getOrderName() + "\"?");
+        alert.setContentText("This will delete the order!");
+        alert.initOwner(itemContainer.getScene().getWindow());
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                homeService.removeOrder(homeService.getActiveOrder());
+                handleToOrdersClicked();
+                renderOrderItems();
+            }
+        });
     }
+
 
     @FXML
     public void handleToSettingsClicked() {
@@ -290,9 +288,19 @@ public class HomeController implements Initializable {
         NavigationController.navigateTo(stage, "/FXML/settings.fxml");
     }
 
-    // Helpers:
+    // HELPERS:
+
+    // Take a BigDecimal and covert to a string
     private String convertToMoney(BigDecimal amount) {
         return "$"+amount.toPlainString();
+    }
+
+    // Load from caching
+    private void loadMenu() {
+        menu = caching.loadMenu();
+    }
+    private void loadCategories() {
+        categories = caching.loadCategories();
     }
 
 }

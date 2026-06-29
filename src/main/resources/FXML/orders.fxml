@@ -10,17 +10,10 @@
 
 <BorderPane style="-fx-background-color: #0b111c;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.OrdersController">
 
-    <top>
-        <HBox alignment="CENTER_LEFT" style="-fx-background-color: #111111; -fx-padding: 12 24; -fx-spacing: 32;">
-            <Label style="-fx-text-fill: #ffffff; -fx-font-size: 20; -fx-font-weight: bold;" text="EasyPOS" />
-            <Label style="-fx-text-fill: #888888; -fx-font-size: 14;" text="|" />
-            <Label style="-fx-text-fill: #cccccc; -fx-font-size: 14;" text="Select Order" />
-        </HBox>
-    </top>
-
     <center>
-        <VBox style="-fx-background-color: #0b111c; -fx-padding: 16; -fx-spacing: 12;">
+        <VBox alignment="TOP_CENTER" style="-fx-background-color: #0b111c; -fx-padding: 16; -fx-spacing: 12;">
             <Label style="-fx-text-fill: #ffffff; -fx-font-size: 18; -fx-font-weight: bold; -fx-padding: 0 0 8 0;" text="Orders" />
+         <Button fx:id="toggleViewButton" mnemonicParsing="false" onAction="#handleToggleOldOrders" style="-fx-background-color: #186cb5; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12 24; -fx-background-radius: 6;" text="Old Orders" />
             <ScrollPane fx:id="orderScrollPane" fitToHeight="true" fitToWidth="true" style="-fx-background: #152645; -fx-background-color: #152645; -fx-border-color: #333333; -fx-border-radius: 6;" VBox.vgrow="ALWAYS">
                 <content>
                     <FlowPane fx:id="orderContainer" hgap="12" style="-fx-padding: 16;" vgap="12" />
@@ -32,8 +25,8 @@
     <bottom>
         <HBox alignment="CENTER_RIGHT" spacing="12" style="-fx-background-color: #111111; -fx-padding: 16 24;">
             <Button mnemonicParsing="false" onAction="#handleToHome" style="-fx-background-color: #e8a020; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12 24; -fx-background-radius: 6;" text="Home" />
-         <Button layoutX="246.0" layoutY="26.0" mnemonicParsing="false" onAction="#handleSelectOrder" style="-fx-background-color: #186cb5; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12 24; -fx-background-radius: 6;" text="Select Order" />
-         <Button layoutX="209.0" layoutY="26.0" mnemonicParsing="false" onAction="#handleCheckoutOrder" style="-fx-background-color: #186cb5; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12 24; -fx-background-radius: 6;" text="Checkout" />
+         <Button fx:id="selectButton" layoutX="246.0" layoutY="26.0" mnemonicParsing="false" onAction="#handleSelectOrder" style="-fx-background-color: #186cb5; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12 24; -fx-background-radius: 6;" text="Select Order" />
+         <Button fx:id="checkoutButton" layoutX="209.0" layoutY="26.0" mnemonicParsing="false" onAction="#handleCheckoutOrder" style="-fx-background-color: #186cb5; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12 24; -fx-background-radius: 6;" text="Checkout" />
             <Button mnemonicParsing="false" onAction="#handleNewOrder" style="-fx-background-color: #0ced48; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12 24; -fx-background-radius: 6;" text="New Order" />
         </HBox>
     </bottom>

@@ -25,6 +25,7 @@ public class CacheService {
     private static final String ORDERS_FILE = DATA_DIR + "orders.json";
     private static final String OLD_ORDERS_FILE = DATA_DIR + "old_orders.json";
     private static final String CATEGORIES_FILE = DATA_DIR + "categories.json";
+    private static final String ARCHIVE_FILE = DATA_DIR + "archive.json";
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     /**
@@ -170,12 +171,17 @@ public class CacheService {
         }
     }
 
+    private static final int MAX_OLD_ORDERS = 100; // TODO: Make this user configurable in settings
+
     public void addNewCompletedOrder(Order completedOrder) {
         ArrayList<Order> oldOrders = loadOldOrders();
         oldOrders.add(completedOrder);
+        if (oldOrders.size() > MAX_OLD_ORDERS) {
+            oldOrders.subList(0, oldOrders.size() - MAX_OLD_ORDERS).clear();
+        }
         saveOldOrders(oldOrders);
     }
-
+    // TODO: Add some sort of large order archive that stores every previous order
     // CATEGORIES:
 
     public void saveCategories(ArrayList<String> categories) {

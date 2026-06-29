@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/** Controller for the settings screen. Leaves bulk of the logic to SettingsService */
+// TODO: Add a link for SettingsService
 public class SettingsController implements Initializable {
 
     @FXML private Button settingsToHome;
