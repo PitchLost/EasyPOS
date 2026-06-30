@@ -48,6 +48,15 @@ TODO
 - Other things that you can config is the note and coin buttons on the payment menu aswell as some additional behaviour of the payment menu
 - There is also a "Reset EasyPOS" button on the settings page, this will delete all your items, categories, and config. So be careful with this!
 
+
+## Code Documentation
+Javadoc was used to document important parts of the code (Controllers, 
+Services, important models etc). You can find this in /docs just simply open the index.html file in a web browser.
+
+### Method structure
+The following list is the standard structure of methods/functions in each class, with some exceptions of large classes where this format
+was not optimal.
+- INIT
 - HANDLERS
 - FXML HANDLERS
 - HELPERS

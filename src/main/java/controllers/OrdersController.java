@@ -17,30 +17,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-/** The controller for the orders view screen. Also has an option to display old orders too. This one doesnt follow the normal function layout
+/** The controller for the orders select screen. Also has an option to display old orders too. This one doesnt follow the normal function layout
  * because pretty much every FXML handler has a private funciton that it also uses so it's more maintainable in this format.*/
-public class OrdersController implements Initializable {
-    HomeService homeService = HomeService.getInstance();
-    Order selectedOrder = null;
+public class OrdersController extends BaseOrderController {
     boolean viewingOldOrders = false;
-    private static final int MAX_DISPLAY_OLD_ORDERS = 100; // TODO: Make user configurable
+    private static final int MAX_DISPLAY_OLD_ORDERS = 100;
 
-    // FXML Elements
-    @FXML private FlowPane orderContainer;
-    @FXML private ScrollPane orderScrollPane;
     @FXML private Button toggleViewButton;
-
-    // TODO: Delete this from FXML cause they are unused and crash if undeclared here
-    @FXML private Button checkoutButton;
-    @FXML private Button selectButton;
+    @FXML private ScrollPane orderScrollPane;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        renderOrders();
+        super.initialize(url, resourceBundle);
         updateToggleButton();
     }
 
-    // FXML HANDLERS
+    @Override
+    protected List<Order> getOrdersToDisplay() {
+        if (!viewingOldOrders) return homeService.getOrders();
+        ArrayList<Order> oldOrders = homeService.getOldOrders();
+        return oldOrders.subList(Math.max(0, oldOrders.size() - MAX_DISPLAY_OLD_ORDERS), oldOrders.size());
+    }
 
     @FXML
     public void handleToggleOldOrders() {
@@ -49,61 +46,6 @@ public class OrdersController implements Initializable {
         renderOrders();
     }
 
-
-
-    private void renderOrders() {
-        orderContainer.getChildren().clear();
-        selectedOrder = null;
-
-        ArrayList<Order> oldOrders = homeService.getOldOrders();
-        List<Order> ordersToShow = viewingOldOrders
-                ? oldOrders.subList(Math.max(0, oldOrders.size() - MAX_DISPLAY_OLD_ORDERS), oldOrders.size())
-                : homeService.getOrders();
-
-        for (Order order : ordersToShow) {
-            VBox card = new VBox(6);
-            card.setPrefWidth(200);
-            card.setPrefHeight(120);
-            card.setUserData(order);
-            setCardStyle(card, false);
-
-            Label name = new Label(order.getOrderName());
-            name.setStyle("-fx-text-fill: #ffffff; -fx-font-size: 14; -fx-font-weight: bold;");
-
-            Label index = new Label("Order " + order.getOrderIndex());
-            index.setStyle("-fx-text-fill: #aaaaaa; -fx-font-size: 12;");
-
-            Label items = new Label(order.getOrderItems().size() + " items");
-            items.setStyle("-fx-text-fill: #aaaaaa; -fx-font-size: 12;");
-
-            Label total = new Label("$" + order.getOrderTotal().toPlainString());
-            total.setStyle("-fx-text-fill: #0ced48; -fx-font-size: 13; -fx-font-weight: bold;");
-
-            card.getChildren().addAll(name, index, items, total);
-            card.setOnMouseClicked(e -> handleOrderCardClicked(order, card));
-            orderContainer.getChildren().add(card);
-        }
-    }
-
-    private void handleOrderCardClicked(Order order, VBox card) {
-        selectedOrder = order;
-
-        for (var node : orderContainer.getChildren()) {
-            setCardStyle((VBox) node, false);
-        }
-        setCardStyle(card, true);
-    }
-
-    private void setCardStyle(VBox card, boolean selected) {
-        card.setStyle(
-                "-fx-background-color: " + (selected ? "#1e3a5f" : "#152645") + ";" +
-                        "-fx-background-radius: 8;" +
-                        "-fx-border-color: " + (selected ? "#e8a020" : "#333333") + ";" +
-                        "-fx-border-radius: 8;" +
-                        "-fx-border-width: " + (selected ? "2" : "1") + ";" +
-                        "-fx-padding: 12;"
-        );
-    }
 
     @FXML
     public void handleNewOrder() {

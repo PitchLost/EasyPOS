@@ -17,19 +17,17 @@ public class Item {
         this.defaultQty = defaultQty;
         this.itemOptions = itemOptions;
     }
+
     public String getName() {
         return itemName;
     }
-    public void setName(String name) {
-        this.itemName = name;
-    }
+    public void setName(String name) {this.itemName = name;}
     public String getItemName() {
         return itemName;
     }
     public BigDecimal getItemPrice() {
         return itemPrice;
     }
-
     public int getDefaultQty() {
         return defaultQty;
     }
@@ -39,15 +37,12 @@ public class Item {
     public String getItemCategory() {
         return itemCategory;
     }
-
     public void setItemCategory(String category) {
         this.itemCategory = category;
     }
-
     public void setItemPrice(BigDecimal price) {
         this.itemPrice = price;
     }
-
     public void setDefaultQty(int qty) {
         this.defaultQty = qty;
     }

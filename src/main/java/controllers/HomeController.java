@@ -203,6 +203,22 @@ public class HomeController implements Initializable {
         NavigationController.navigateTo(stage, "/FXML/orders.fxml");
     }
 
+    @FXML
+    public void handleToOrderBoard() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Enter Orders Mode");
+        alert.setHeaderText("Switch to orders mode?");
+        alert.setContentText("This will enter the orders mode. You will not be able to create/manage orders from this mode");
+        alert.initOwner(itemContainer.getScene().getWindow());
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                Stage stage = (Stage) itemScrollPane.getScene().getWindow();
+                NavigationController.navigateTo(stage, "/FXML/orders2.fxml");
+            }
+        });
+    }
+
 
     @FXML
     public void handleEditName() {

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 /**
  * Central service for managing orders during a session.
  * Holds the in-memory list of orders and tracks which one is currently active.
- * <p>
  * Implemented as a singleton since order state needs to persist across
  * the lifetime of the application without being re-fetched constantly.
  */
@@ -181,7 +180,7 @@ public class HomeService {
     public ArrayList<Order> getOrders() {
         return orders;
     }
-
+    /** Returns old orders from caching*/
     public ArrayList<Order> getOldOrders() {
         return caching.loadOldOrders();
     }

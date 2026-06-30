@@ -13,6 +13,8 @@ import java.util.LinkedHashMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Handles reading and writing persistent data to disk.
@@ -25,8 +27,15 @@ public class CacheService {
     private static final String ORDERS_FILE = DATA_DIR + "orders.json";
     private static final String OLD_ORDERS_FILE = DATA_DIR + "old_orders.json";
     private static final String CATEGORIES_FILE = DATA_DIR + "categories.json";
-    private static final String ARCHIVE_FILE = DATA_DIR + "archive.json";
-    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+    // A simple one lined delcration of GSON turned into this mess to handle the timestamping
+    private final Gson gson = new GsonBuilder()
+            .setPrettyPrinting()
+            .registerTypeAdapter(LocalDateTime.class, (com.google.gson.JsonSerializer<LocalDateTime>)
+                    (src, type, ctx) -> new com.google.gson.JsonPrimitive(src.toString()))
+            .registerTypeAdapter(LocalDateTime.class, (com.google.gson.JsonDeserializer<LocalDateTime>)
+                    (json, type, ctx) -> LocalDateTime.parse(json.getAsString()))
+            .create();
 
     /**
      * Creates the ~/.easypos/ directory if it doesn't already exist.
@@ -246,5 +255,4 @@ public class CacheService {
         categories.add(category);
         saveCategories(categories);
     }
-
 }

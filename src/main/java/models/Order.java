@@ -2,19 +2,19 @@ package models;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.UUID;
-import models.Item;
-import models.OrderItem;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class Order {
+    LocalDateTime createdAt;
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss yyyy-MM-dd ");
     String orderName;
     int orderIndex;
     UUID orderId;
     ArrayList<OrderItem> orderItems = new ArrayList<>();
     Boolean orderCompleted = false;
 
-
-    // Constructor
     public Order(int idx, String name) {
         if (name.isEmpty()) {
             name = "Order " + idx;
@@ -22,6 +22,7 @@ public class Order {
         orderName = name;
         orderId =  UUID.randomUUID();
         orderIndex = idx;
+        createdAt = LocalDateTime.now();
     }
 
     // Add an item to the order
@@ -42,34 +43,23 @@ public class Order {
         }
     }
 
-    // Getters:
-
-
-    // Get the items ArrayList of the order
-    public ArrayList<OrderItem> getOrderItems() {
-        return orderItems;
-    }
-
-    public Boolean getOrderCompleted() {
-        return orderCompleted;
-    }
-
+    // Getters/Setters:
+    public ArrayList<OrderItem> getOrderItems() {return orderItems;}
+    public Boolean getOrderCompleted() {return orderCompleted;}
     public void setOrderComplete(Boolean to) {
         orderCompleted = to;
     }
-
-
-    public int getOrderIndex() {
-        return orderIndex;
-    }
-
+    public int getOrderIndex() {return orderIndex;}
     public UUID getOrderId() {
         return orderId;
     }
-
     public String getOrderName() {
         return orderName;
     }
+    public String getFormattedTimestamp() {return createdAt.format(FORMATTER);}
+    public LocalDateTime getCreatedAt() {return createdAt;}
+    public void setOrderName(String orderName) {this.orderName = orderName;}
+
 
     public BigDecimal getOrderTotal() {
         BigDecimal total = BigDecimal.ZERO;
@@ -86,14 +76,8 @@ public class Order {
                 OrderItem orderItem = orderItems.get(i);
                 orderItem.setItemQuantity(quantity);
                 orderItem.setItemPrice(orderItem.getUnitPrice().multiply(new BigDecimal(quantity)));
-
                 return;
             }
         }
     }
-    public void setOrderName(String orderName) {
-        this.orderName = orderName;
-    }
-
-
-    }
+}
