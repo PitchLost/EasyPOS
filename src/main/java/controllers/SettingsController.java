@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import models.Environment;
 import services.SettingsService;
 
 import java.io.IOException;
@@ -24,7 +25,22 @@ public class SettingsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        updateServerStatus();
+    }
 
+    private void updateServerStatus() {
+        Environment env = settingsService.getEnv();
+        if (env.isHost()) {
+            try {
+                serverStatus.setText("Server: Running\nDevice IP: " + java.net.InetAddress.getLocalHost().getHostAddress() + "\nPort: " + env.getServerPort());
+            } catch (java.net.UnknownHostException e) {
+                serverStatus.setText("Server: Running\nDevice IP: Unknown\nPort: " + env.getServerPort());
+            }
+        } else if (env.isOrdersMode()) {
+            serverStatus.setText("Server: Client Mode\nConnected to: " + env.getServerAddress() + ":" + env.getServerPort());
+        } else {
+            serverStatus.setText("Server: Not Running");
+        }
     }
 
     @FXML
@@ -79,18 +95,14 @@ public class SettingsController implements Initializable {
 
         dialog.showAndWait().ifPresent(name -> {
             settingsService.enterHostMode(Integer.parseInt(name));
-            try {
-                serverStatus.setText("Server: Running\nDevice IP: " + java.net.InetAddress.getLocalHost().getHostAddress()+"\nPort: " + name);
-            } catch (java.net.UnknownHostException e) {
-                serverStatus.setText("Server running. Could not determine IP.");
-            }
+            updateServerStatus();
         });
     }
 
     @FXML
     public void startOrdersMode() {
         // Step 1: Get the host IP
-        TextInputDialog ipDialog = new TextInputDialog("192.168.1.x");
+        TextInputDialog ipDialog = new TextInputDialog("192.168.1");
         ipDialog.setTitle("Connect to Host");
         ipDialog.setHeaderText("Host IP Address");
         ipDialog.setContentText("Enter the host device's IP address:");

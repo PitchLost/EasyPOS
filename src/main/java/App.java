@@ -32,7 +32,7 @@ public class App extends Application {
         stage.setTitle("EasyPOS");
         stage.setScene(scene);
         stage.setMaximized(true);
-        stage.setFullScreen(true);
+        // stage.setFullScreen(true);
         stage.show();
     }
 

@@ -23,12 +23,12 @@
             <Label style="-fx-text-fill: white; -fx-font-size: 35; -fx-font-weight: bold;" text="POS Items" />
             <HBox fx:id="notePane" alignment="CENTER" maxWidth="Infinity" spacing="10" style="-fx-background-color: #0b111c; -fx-padding: 12; -fx-min-height: 80;">
             <children>
-               <Button layoutX="418.0" layoutY="29.0" mnemonicParsing="false" onAction="#openManageCategories" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Manage Categories">
+               <Button layoutX="418.0" layoutY="29.0" mnemonicParsing="false" onAction="#openManageCategories" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #32a89b; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Manage Categories">
                   <font>
                      <Font size="36.0" />
                   </font>
                </Button>
-               <Button layoutX="520.0" layoutY="29.0" mnemonicParsing="false" onAction="#openManageItems" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Manage Items">
+               <Button layoutX="520.0" layoutY="29.0" mnemonicParsing="false" onAction="#openManageItems" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #32a89b; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Manage Items">
                   <font>
                      <Font size="36.0" />
                   </font>
@@ -38,12 +38,12 @@
             <Label style="-fx-text-fill: white; -fx-font-size: 39; -fx-font-weight: bold;" text="Payment Options" />
             <HBox fx:id="coinPane" alignment="CENTER" maxWidth="Infinity" spacing="10" style="-fx-background-color: #0b111c; -fx-padding: 12; -fx-min-height: 80;">
             <children>
-               <Button mnemonicParsing="false" onAction="#toHome" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Manage Coins">
+               <Button mnemonicParsing="false" onAction="#toHome" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #32a89b; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Manage Coins">
                   <font>
                      <Font size="36.0" />
                   </font>
                </Button>
-               <Button layoutX="328.0" layoutY="29.0" mnemonicParsing="false" onAction="#toHome" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Manage Notes">
+               <Button layoutX="328.0" layoutY="29.0" mnemonicParsing="false" onAction="#toHome" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #32a89b; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Manage Notes">
                   <font>
                      <Font size="36.0" />
                   </font>
@@ -59,29 +59,29 @@
             </HBox>
          <HBox fx:id="coinPane1" alignment="CENTER" layoutX="34.0" layoutY="253.0" maxWidth="Infinity" spacing="10" style="-fx-background-color: #0b111c; -fx-padding: 12; -fx-min-height: 80;">
             <children>
-               <Button layoutX="430.0" layoutY="29.0" mnemonicParsing="false" onAction="#toHome" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Reset App">
+               <Button layoutX="124.0" layoutY="29.0" mnemonicParsing="false" onAction="#startHostMode" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #0ced48; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Start Host Mode">
                   <font>
                      <Font size="36.0" />
                   </font>
                </Button>
-               <Button layoutX="124.0" layoutY="29.0" mnemonicParsing="false" onAction="#startHostMode" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Start Host Mode">
+               <Button layoutX="226.0" layoutY="29.0" mnemonicParsing="false" onAction="#startOrdersMode" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #057a24; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Start Orders Mode">
                   <font>
                      <Font size="36.0" />
                   </font>
                </Button>
-               <Button layoutX="226.0" layoutY="29.0" mnemonicParsing="false" onAction="#startOrdersMode" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Connect To Different Device">
+               <Button layoutX="430.0" layoutY="29.0" mnemonicParsing="false" onAction="#resetServer" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #3a1a1a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Reset Server">
                   <font>
                      <Font size="36.0" />
                   </font>
                </Button>
-               <Button layoutX="430.0" layoutY="29.0" mnemonicParsing="false" onAction="#resetServer" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Reset Server Config">
+               <Button layoutX="430.0" layoutY="29.0" mnemonicParsing="false" onAction="#toHome" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #ff0000; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Reset Data">
                   <font>
                      <Font size="36.0" />
                   </font>
                </Button>
             </children>
          </HBox>
-         <Label fx:id="serverStatus" style="-fx-text-fill: white; -fx-font-size: 35; -fx-font-weight: bold;" text="Server Not Running" />
+         <Label fx:id="serverStatus" style="-fx-text-fill: white; -fx-font-size: 35;" />
 
         </VBox>
     </center>

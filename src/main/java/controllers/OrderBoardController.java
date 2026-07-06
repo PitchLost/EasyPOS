@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.Order;
 import models.OrderItem;
+import services.SettingsService;
 
 import java.net.URL;
 import java.util.List;
@@ -69,11 +70,12 @@ public class OrderBoardController extends BaseOrderController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Leave Orders Mode");
         alert.setHeaderText("Switch to standard mode?");
-        alert.setContentText("This will leave the orders mode. Come back anytime from the home screen");
+        alert.setContentText("This will exit the orders mode.");
         alert.initOwner(orderContainer.getScene().getWindow());
 
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
+                new SettingsService().resetServerSettings();
                 Stage stage = (Stage) orderScrollPane.getScene().getWindow();
                 NavigationController.navigateTo(stage, "/FXML/home.fxml", null);
             }

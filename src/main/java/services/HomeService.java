@@ -266,5 +266,4 @@ public class HomeService {
     public void setOnOrdersUpdated(Runnable callback) {
         this.onOrdersUpdated = callback;
     }
-
 }

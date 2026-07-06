@@ -37,4 +37,8 @@ public class SettingsService {
         env.setServerPort(port);
         caching.saveEnv(env);
     }
+
+    public Environment getEnv() {
+        return caching.loadEnv();
+    }
 }
