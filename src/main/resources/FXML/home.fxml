@@ -14,7 +14,7 @@
     <!-- LEFT: Order Items -->
     <center>
         <VBox maxHeight="Infinity" maxWidth="Infinity" style="-fx-background-color: #0b111c; -fx-padding: 16; -fx-spacing: 8;">
-            <Label fx:id="OrderNameLabel" style="-fx-text-fill: #ffffff; -fx-font-size: 18; -fx-font-weight: bold; -fx-padding: 0 0 8 0;" text="{Order.getName()}" />
+            <Label fx:id="OrderNameLabel" style="-fx-text-fill: #ffffff; -fx-font-size: 18; -fx-font-weight: bold; -fx-padding: 0 0 8 0;" />
             <ScrollPane fx:id="orderScrollPane" fitToWidth="true" style="-fx-background: #152645; -fx-background-color: #152645; -fx-border-color: #333333; -fx-border-radius: 6;" VBox.vgrow="ALWAYS">
                 <content>
                     <VBox fx:id="orderContainer" spacing="6.0" style="-fx-padding: 8;" />

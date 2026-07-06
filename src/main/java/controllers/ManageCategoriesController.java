@@ -27,13 +27,13 @@ public class ManageCategoriesController implements Initializable {
     }
     // FXML HANDLERS
     @FXML
-    public void handleDone() {
+    private void handleDone() {
         Stage stage = (Stage) categoryList.getScene().getWindow();
         stage.close();
     }
 
     @FXML
-    public void handleCreate() {
+    private void handleCreate() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("New Category");
         dialog.setHeaderText("New Category");
@@ -48,7 +48,7 @@ public class ManageCategoriesController implements Initializable {
     }
 
     @FXML
-    public void handleRename() {
+    private void handleRename() {
         String selected = categoryList.getSelectionModel().getSelectedItem();
         if (selected == null) return;
         String originalName = categoryList.getSelectionModel().getSelectedItem();
@@ -67,7 +67,7 @@ public class ManageCategoriesController implements Initializable {
         });
     }
     @FXML
-    public void handleDelete() {
+    private void handleDelete() {
         String selected = categoryList.getSelectionModel().getSelectedItem();
         if (selected == null) return;
 

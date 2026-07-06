@@ -42,13 +42,13 @@ public class ManageItemsController implements Initializable {
     }
 
     @FXML
-    public void handleDone() {
+    private void handleDone() {
         Stage stage = (Stage) itemList.getScene().getWindow();
         stage.close();
     }
 
     @FXML
-    public void handleNewItem() {
+    private void handleNewItem() {
         ArrayList<String> categories = caching.loadCategories();
 
         TextInputDialog nameDialog = new TextInputDialog();
@@ -85,7 +85,7 @@ public class ManageItemsController implements Initializable {
     }
 
     @FXML
-    public void handleRename() {
+    private void handleRename() {
         Item selected = itemList.getSelectionModel().getSelectedItem();
         if (selected == null) return;
 
@@ -105,7 +105,7 @@ public class ManageItemsController implements Initializable {
         });
     }
     @FXML
-    public void handleEditPrice() {
+    private void handleEditPrice() {
         Item selected = itemList.getSelectionModel().getSelectedItem();
         if (selected == null) return;
 
@@ -125,7 +125,7 @@ public class ManageItemsController implements Initializable {
     }
 
     @FXML
-    public void handleEditCategory() {
+    private void handleEditCategory() {
         Item selected = itemList.getSelectionModel().getSelectedItem();
         if (selected == null) return;
 
@@ -145,7 +145,7 @@ public class ManageItemsController implements Initializable {
     }
 
     @FXML
-    public void handleEditQty() {
+    private void handleEditQty() {
         Item selected = itemList.getSelectionModel().getSelectedItem();
         if (selected == null) return;
 
@@ -165,7 +165,7 @@ public class ManageItemsController implements Initializable {
     }
 
     @FXML
-    public void handleDelete() {
+    private void handleDelete() {
         Item selected = itemList.getSelectionModel().getSelectedItem();
         if (selected == null) return;
 

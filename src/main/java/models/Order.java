@@ -25,13 +25,7 @@ public class Order {
         createdAt = LocalDateTime.now();
     }
 
-    // Add an item to the order
-    public void addItem(Item item) {
-        OrderItem newItem = new OrderItem(item.getName(),orderItems.size(), item.getDefaultQty(), new ArrayList<>(), item.getItemPrice());
-        orderItems.add(newItem);
-    }
-
-    // Void/Remove item from the order
+    /** Void/Remove item from the order */
     public void voidItem(OrderItem item) {
         System.out.println("Order.voidItem(), Item details: "+item.getItemName());
         for (int i = 0; i < orderItems.size(); i++) {
@@ -41,6 +35,12 @@ public class Order {
                 orderItems.remove(i);
             }
         }
+    }
+
+    /** Add an item to the order */
+    public void addItem(Item item) {
+        OrderItem newItem = new OrderItem(item.getName(),orderItems.size(), item.getDefaultQty(), new ArrayList<>(), item.getItemPrice());
+        orderItems.add(newItem);
     }
 
     // Getters/Setters:
@@ -59,8 +59,6 @@ public class Order {
     public String getFormattedTimestamp() {return createdAt.format(FORMATTER);}
     public LocalDateTime getCreatedAt() {return createdAt;}
     public void setOrderName(String orderName) {this.orderName = orderName;}
-
-
     public BigDecimal getOrderTotal() {
         BigDecimal total = BigDecimal.ZERO;
         for (OrderItem item : orderItems) {

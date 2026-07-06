@@ -66,7 +66,7 @@ public class OrderBoardController extends BaseOrderController {
     }
 
     @FXML
-    public void handleToHome() {
+    private void handleToHome() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Leave Orders Mode");
         alert.setHeaderText("Switch to standard mode?");

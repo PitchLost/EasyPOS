@@ -110,7 +110,7 @@ public class PaymentController implements Initializable {
     // FXML:
 
     @FXML
-    public void markOrderComplete() {
+    private void markOrderComplete() {
         activeOrder.setOrderComplete(!activeOrder.getOrderCompleted());
         updateCompleteButton();
     }
@@ -126,20 +126,20 @@ public class PaymentController implements Initializable {
     }
 
     @FXML
-    public void toHome() {
+    private void toHome() {
 
         Stage stage = (Stage) coinPane.getScene().getWindow();
         NavigationController.navigateTo(stage, "/FXML/home.fxml");
     }
 
     @FXML
-    public void toSelectOrder() {
+    private void toSelectOrder() {
         Stage stage = (Stage) coinPane.getScene().getWindow();
         NavigationController.navigateTo(stage, "/FXML/orders.fxml");
     }
 
     @FXML
-    public void finishOrder() {
+    private void finishOrder() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Finish Order");
         alert.setHeaderText("Finish \"" + activeOrder.getOrderName() + "\"?");
@@ -161,7 +161,7 @@ public class PaymentController implements Initializable {
 
     // SETTERS:
 
-    // Setter for the payment service, this way we dont have to pass paymentServices around different stages
+    /** Sets the payment service, this way we dont have to pass paymentServices around different stages */
     public void setPaymentService(PaymentService paymentService) {
         this.paymentService = paymentService;
         this.totalDue = paymentService.getTotalDue(); // actually grab it

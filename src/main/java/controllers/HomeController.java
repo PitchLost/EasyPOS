@@ -84,6 +84,7 @@ public class HomeController implements Initializable {
         }
     }
 
+    // Handler for when a category is clicked
     private void handleCategoryClicked(String category, Button btn) {
         selectedCategory = category;
 
@@ -140,7 +141,7 @@ public class HomeController implements Initializable {
         }
     }
 
-    // Renders the items in the order onto the GUI
+    // Render order items
     private void renderOrderItems() {
         homeService.recalculateTotal(); // Ensure the total has been calculated since loading the orders from cache
         orderTotalLabel.setText(convertToMoney(homeService.getTotal()));
@@ -179,14 +180,14 @@ public class HomeController implements Initializable {
 
 
     @FXML
-    public void handleNewOrder() {
+    private void handleNewOrder() {
         homeService.newOrder();
         renderOrderItems();
     }
 
 
     @FXML
-    public void handleToPaymentClicked() {
+    private void handleToPaymentClicked() {
         paymentService = new PaymentService(homeService.getTotal(), homeService.getActiveOrder());
         Stage stage = (Stage) itemScrollPane.getScene().getWindow();
 
@@ -198,30 +199,14 @@ public class HomeController implements Initializable {
 
 
     @FXML
-    public void handleToOrdersClicked() {
+    private void handleToOrdersClicked() {
         Stage stage = (Stage) itemScrollPane.getScene().getWindow();
         NavigationController.navigateTo(stage, "/FXML/orders.fxml");
     }
 
-    @FXML
-    public void handleToOrderBoard() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Enter Orders Mode");
-        alert.setHeaderText("Switch to orders mode?");
-        alert.setContentText("This will enter the orders mode. You will not be able to create/manage orders from this mode");
-        alert.initOwner(itemContainer.getScene().getWindow());
-
-        alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                Stage stage = (Stage) itemScrollPane.getScene().getWindow();
-                NavigationController.navigateTo(stage, "/FXML/orders2.fxml");
-            }
-        });
-    }
-
 
     @FXML
-    public void handleEditName() {
+    private void handleEditName() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Edit Order Name");
         dialog.setHeaderText("Edit Name for \"" + homeService.getActiveOrder().getOrderName() + "\"");
@@ -243,7 +228,7 @@ public class HomeController implements Initializable {
 
 
     @FXML
-    public void handleEditQty() {
+    private void handleEditQty() {
         if (selectedItem == null) return;
 
         TextInputDialog dialog = new TextInputDialog(String.valueOf(selectedItem.getItemQuantity()));
@@ -268,7 +253,7 @@ public class HomeController implements Initializable {
 
 
     @FXML
-    public void handleVoidItem() {
+    private void handleVoidItem() {
         if (selectedItem == null) {
             selectedItem = homeService.getTopItem();
         }
@@ -279,7 +264,7 @@ public class HomeController implements Initializable {
 
 
     @FXML
-    public void handleVoidOrder() {
+    private void handleVoidOrder() {
         Order activeOrder = homeService.getActiveOrder();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -299,7 +284,7 @@ public class HomeController implements Initializable {
 
 
     @FXML
-    public void handleToSettingsClicked() {
+    private void handleToSettingsClicked() {
         Stage stage = (Stage) itemScrollPane.getScene().getWindow();
         NavigationController.navigateTo(stage, "/FXML/settings.fxml");
     }

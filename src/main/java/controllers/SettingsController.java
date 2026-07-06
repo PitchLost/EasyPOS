@@ -40,7 +40,7 @@ public class SettingsController implements Initializable {
     }
 
     @FXML
-    public void toHome() {
+    private void toHome() {
         Stage stage = (Stage) settingsToHome.getScene().getWindow();
         NavigationController.navigateTo(stage, "/FXML/home.fxml", null);
     }
@@ -81,7 +81,7 @@ public class SettingsController implements Initializable {
 
     // Server stuff
     @FXML
-    public void startHostMode() {
+    private void startHostMode() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Start Host Mode");
         dialog.setHeaderText("Server Port");
@@ -96,7 +96,7 @@ public class SettingsController implements Initializable {
     }
 
     @FXML
-    public void startOrdersMode() {
+    private void startOrdersMode() {
         // Step 1: Get the host IP
         TextInputDialog ipDialog = new TextInputDialog("192.168.1");
         ipDialog.setTitle("Connect to Host");
@@ -137,7 +137,7 @@ public class SettingsController implements Initializable {
     }
 
     @FXML
-    public void resetServer() {
+    private void resetServer() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Reset Server");
         alert.setHeaderText("Reset Server");
@@ -147,6 +147,33 @@ public class SettingsController implements Initializable {
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
                 settingsService.resetServerSettings();
+                updateServerStatus();
+            }
+        });
+    }
+
+    @FXML
+    private void resetApp() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Reset");
+        alert.setHeaderText("Reset EasyPOS");
+        alert.setContentText("This will remove all cached data and reset EasyPOS");
+        alert.initOwner(settingsToHome.getScene().getWindow());
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
+                alert2.setTitle("Close EasyPOS");
+                alert2.setHeaderText("Close EasyPOS");
+                alert2.setContentText("This will close EasyPOS to complete the reset");
+                alert2.initOwner(settingsToHome.getScene().getWindow());
+
+                alert2.showAndWait().ifPresent(response2 -> {
+                    if (response2 == ButtonType.OK) {
+                        settingsService.resetApp();
+                        javafx.application.Platform.exit();
+                    }
+                });
             }
         });
     }

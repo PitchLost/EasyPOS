@@ -35,7 +35,7 @@ public class OrdersController extends BaseOrderController {
     }
 
     @FXML
-    public void handleToggleOldOrders() {
+    private void handleToggleOldOrders() {
         viewingOldOrders = !viewingOldOrders;
         updateToggleButton();
         renderOrders();
@@ -43,13 +43,13 @@ public class OrdersController extends BaseOrderController {
 
 
     @FXML
-    public void handleNewOrder() {
+    private void handleNewOrder() {
         homeService.newOrder();
         renderOrders();
     }
 
     @FXML
-    public void handleCheckoutOrder() {
+    private void handleCheckoutOrder() {
         if (selectedOrder == null) return;
 
         Order orderToUse = selectedOrder;
@@ -68,7 +68,7 @@ public class OrdersController extends BaseOrderController {
     }
 
     @FXML
-    public void handleSelectOrder() {
+    private void handleSelectOrder() {
         if (selectedOrder == null) return;
 
         if (viewingOldOrders) {
@@ -82,7 +82,7 @@ public class OrdersController extends BaseOrderController {
     }
 
     @FXML
-    public void handleToHome() {
+    private void handleToHome() {
         Stage stage = (Stage) orderScrollPane.getScene().getWindow();
         NavigationController.navigateTo(stage, "/FXML/home.fxml", null);
     }

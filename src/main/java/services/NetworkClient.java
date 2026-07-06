@@ -17,6 +17,7 @@ public class NetworkClient {
 
     private NetworkClient() {}
 
+    /** Returns the singleton version of the NetworkClient */
     public static synchronized NetworkClient getInstance() {
         if (instance == null) {
             instance = new NetworkClient();

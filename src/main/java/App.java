@@ -16,9 +16,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        HomeService.getInstance().init(); // Do this here bc it breaks everything if it's called later in runtime
+        HomeService.getInstance().init();
 
-        // Start the server if in host mode or in orders mode
         Environment env = caching.loadEnv();
         if (env.isHost()) {
             networkManager.startHostMode(env.getServerPort());
@@ -26,13 +25,13 @@ public class App extends Application {
             networkManager.switchToClientMode(env.getServerPort());
         }
 
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/home.fxml"));
+        // Load the correct screen based on mode
+        String fxml = env.isOrdersMode() ? "/FXML/orders2.fxml" : "/FXML/home.fxml";
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Scene scene = new Scene(loader.load());
         stage.setTitle("EasyPOS");
         stage.setScene(scene);
         stage.setMaximized(true);
-        // stage.setFullScreen(true);
         stage.show();
     }
 

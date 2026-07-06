@@ -74,7 +74,7 @@
                      <Font size="36.0" />
                   </font>
                </Button>
-               <Button layoutX="430.0" layoutY="29.0" mnemonicParsing="false" onAction="#toHome" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #ff0000; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Reset Data">
+               <Button layoutX="430.0" layoutY="29.0" mnemonicParsing="false" onAction="#resetApp" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #ff0000; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Reset EasyPOS">
                   <font>
                      <Font size="36.0" />
                   </font>
