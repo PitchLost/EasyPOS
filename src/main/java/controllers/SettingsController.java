@@ -32,12 +32,12 @@ public class SettingsController implements Initializable {
         Environment env = settingsService.getEnv();
         if (env.isHost()) {
             try {
-                serverStatus.setText("Server: Running\nDevice IP: " + java.net.InetAddress.getLocalHost().getHostAddress() + "\nPort: " + env.getServerPort());
+                serverStatus.setText("Server: Running | Device IP: " + java.net.InetAddress.getLocalHost().getHostAddress() + "| Port: " + env.getServerPort());
             } catch (java.net.UnknownHostException e) {
-                serverStatus.setText("Server: Running\nDevice IP: Unknown\nPort: " + env.getServerPort());
+                serverStatus.setText("Server: Running | Device IP: Unknown | Port: " + env.getServerPort());
             }
         } else if (env.isOrdersMode()) {
-            serverStatus.setText("Server: Client Mode\nConnected to: " + env.getServerAddress() + ":" + env.getServerPort());
+            serverStatus.setText("Server: Client Mode | Connected to: " + env.getServerAddress() + ":" + env.getServerPort());
         } else {
             serverStatus.setText("Server: Not Running");
         }
