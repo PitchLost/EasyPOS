@@ -10,14 +10,6 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HomeController">
-    <!-- TOP: Header -->
-    <top>
-        <HBox alignment="CENTER_LEFT" style="-fx-background-color: #111111; -fx-padding: 12 24; -fx-spacing: 32;">
-            <Label style="-fx-text-fill: #ffffff; -fx-font-size: 20; -fx-font-weight: bold;" text="EasyPOS" />
-            <Label style="-fx-text-fill: #888888; -fx-font-size: 14;" text="|" />
-            <Label style="-fx-text-fill: #cccccc; -fx-font-size: 14;" text="12:00 PM" />
-        </HBox>
-    </top>
 
     <!-- LEFT: Order Items -->
     <center>

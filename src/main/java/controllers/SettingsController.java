@@ -31,11 +31,7 @@ public class SettingsController implements Initializable {
     private void updateServerStatus() {
         Environment env = settingsService.getEnv();
         if (env.isHost()) {
-            try {
-                serverStatus.setText("Server: Running | Device IP: " + java.net.InetAddress.getLocalHost().getHostAddress() + "| Port: " + env.getServerPort());
-            } catch (java.net.UnknownHostException e) {
-                serverStatus.setText("Server: Running | Device IP: Unknown | Port: " + env.getServerPort());
-            }
+            serverStatus.setText("Server: Running | Device IP: " + getLocalIp() + " | Port: " + env.getServerPort());
         } else if (env.isOrdersMode()) {
             serverStatus.setText("Server: Client Mode | Connected to: " + env.getServerAddress() + ":" + env.getServerPort());
         } else {
@@ -153,5 +149,25 @@ public class SettingsController implements Initializable {
                 settingsService.resetServerSettings();
             }
         });
+    }
+
+    private String getLocalIp() {
+        try {
+            java.util.Enumeration<java.net.NetworkInterface> interfaces = java.net.NetworkInterface.getNetworkInterfaces();
+            while (interfaces.hasMoreElements()) {
+                java.net.NetworkInterface iface = interfaces.nextElement();
+                if (iface.isLoopback() || !iface.isUp()) continue;
+                java.util.Enumeration<java.net.InetAddress> addresses = iface.getInetAddresses();
+                while (addresses.hasMoreElements()) {
+                    java.net.InetAddress addr = addresses.nextElement();
+                    if (addr instanceof java.net.Inet4Address) {
+                        return addr.getHostAddress();
+                    }
+                }
+            }
+        } catch (java.net.SocketException e) {
+            e.printStackTrace();
+        }
+        return "Unknown";
     }
 }
