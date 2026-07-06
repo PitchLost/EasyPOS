@@ -185,6 +185,11 @@ public class HomeService {
      * Returns the currently active order object.
      */
     public Order getActiveOrder() {
+        if (orders.isEmpty()) {
+            newOrder();
+            selectOrder(orders.get(0));
+            orderIndex = 0;
+        }
         return orders.get(orderIndex);
     }
 
