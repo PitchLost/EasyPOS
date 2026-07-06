@@ -12,7 +12,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-/** Base controller for any screen that displays orders as a grid of cards.
+/** Base controller for any screen that displays orders as a grid of cards. (Mainly the Order Board and  Select Orders)
  * Subclasses customize which orders are shown and what happens when a card is selected. */
 public abstract class BaseOrderController implements Initializable {
     protected HomeService homeService = HomeService.getInstance();
@@ -49,7 +49,7 @@ public abstract class BaseOrderController implements Initializable {
             items.setStyle("-fx-text-fill: #aaaaaa; -fx-font-size: 12;");
 
             Label total = new Label("$" + order.getOrderTotal().toPlainString());
-            total.setStyle("-fx-text-fill: #0ced48; -fx-font-size: 13; -fx-font-weight: bold;");
+            total.setStyle("-fx-text-fill: #ffffff; -fx-font-size: 13; -fx-font-weight: bold;");
 
             Label time = new Label(order.getFormattedTimestamp());
             time.setStyle("-fx-text-fill: #0ced48; -fx-font-size: 9;");

@@ -1,5 +1,6 @@
 package services;
 
+import models.Environment;
 import models.Item;
 import models.Order;
 
@@ -27,15 +28,10 @@ public class CacheService {
     private static final String ORDERS_FILE = DATA_DIR + "orders.json";
     private static final String OLD_ORDERS_FILE = DATA_DIR + "old_orders.json";
     private static final String CATEGORIES_FILE = DATA_DIR + "categories.json";
+    private static final String ENVIRONMENT_FILE = DATA_DIR + "environment.json";
 
-    // A simple one lined delcration of GSON turned into this mess to handle the timestamping
-    private final Gson gson = new GsonBuilder()
-            .setPrettyPrinting()
-            .registerTypeAdapter(LocalDateTime.class, (com.google.gson.JsonSerializer<LocalDateTime>)
-                    (src, type, ctx) -> new com.google.gson.JsonPrimitive(src.toString()))
-            .registerTypeAdapter(LocalDateTime.class, (com.google.gson.JsonDeserializer<LocalDateTime>)
-                    (json, type, ctx) -> LocalDateTime.parse(json.getAsString()))
-            .create();
+    // A simple one lined delceration of GSON turned into this mess to handle the timestamping
+    private final Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()).create();
 
     /**
      * Creates the ~/.easypos/ directory if it doesn't already exist.
@@ -254,5 +250,28 @@ public class CacheService {
         if (categories.contains(category)) return;
         categories.add(category);
         saveCategories(categories);
+    }
+
+
+    public void saveEnv(Environment env) {
+        try {
+            ensureDataDirExists();
+            String json = gson.toJson(env);
+            Files.writeString(Paths.get(ENVIRONMENT_FILE), json);
+            System.out.println("Environment has been saved! :)");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Environment loadEnv() {
+        try {
+            if (!Files.exists(Paths.get(ENVIRONMENT_FILE))) return new Environment(false, false, 8000);
+            String json = Files.readString(Paths.get(ENVIRONMENT_FILE));
+            return gson.fromJson(json, Environment.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new Environment(false, false, 8000);
+        }
     }
 }

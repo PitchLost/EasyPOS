@@ -1,15 +1,10 @@
 package controllers;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.Order;
-import services.HomeService;
 import services.PaymentService;
 
 import java.net.URL;

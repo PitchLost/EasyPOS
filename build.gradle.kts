@@ -6,12 +6,10 @@ plugins {
 
 javafx {
     version = "21"
-    // Kotlin DSL uses modules() function call notation
     modules("javafx.controls", "javafx.fxml")
 }
 
 application {
-    // Replace with your actual package and main class name
     mainClass.set("App")
 }
 
@@ -27,6 +25,16 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     implementation("com.google.code.gson:gson:2.10.1")
+}
+
+tasks.jar {
+    manifest {
+        attributes["Main-Class"] = "App"
+    }
+    from({
+        configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) }
+    })
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 tasks.test {

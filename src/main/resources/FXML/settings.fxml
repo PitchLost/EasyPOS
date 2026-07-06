@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane style="-fx-background-color: #152645;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SettingsController">
+<BorderPane style="-fx-background-color: #152645;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SettingsController">
 
     <top>
         <VBox alignment="CENTER" style="-fx-padding: 24; -fx-spacing: 8;">
@@ -57,6 +60,21 @@
          <HBox fx:id="coinPane1" alignment="CENTER" layoutX="34.0" layoutY="253.0" maxWidth="Infinity" spacing="10" style="-fx-background-color: #0b111c; -fx-padding: 12; -fx-min-height: 80;">
             <children>
                <Button layoutX="430.0" layoutY="29.0" mnemonicParsing="false" onAction="#toHome" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Reset App">
+                  <font>
+                     <Font size="36.0" />
+                  </font>
+               </Button>
+               <Button layoutX="124.0" layoutY="29.0" mnemonicParsing="false" onAction="#startHostMode" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Start Host Mode">
+                  <font>
+                     <Font size="36.0" />
+                  </font>
+               </Button>
+               <Button layoutX="226.0" layoutY="29.0" mnemonicParsing="false" onAction="#startOrdersMode" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Connect To Different Device">
+                  <font>
+                     <Font size="36.0" />
+                  </font>
+               </Button>
+               <Button layoutX="430.0" layoutY="29.0" mnemonicParsing="false" onAction="#resetServer" prefHeight="30.0" prefWidth="194.0" style="-fx-background-color: #2a2a2a; -fx-text-fill: #ffffff; -fx-font-size: 14; -fx-padding: 12;" text="Reset Server Config">
                   <font>
                      <Font size="36.0" />
                   </font>
