@@ -14,12 +14,20 @@ public class SettingsService {
     }
 
     public void enterHostMode(int port) {
-        caching.saveEnv(new Environment(true, false, port));
+        Environment env = caching.loadEnv();
+        env.setHost(true);
+        env.setOrdersMode(false);
+        env.setServerPort(port);
+        caching.saveEnv(env);
         networkManager.startHostMode(port);
     }
 
     public void enterOrdersMode(int port) {
-        caching.saveEnv(new Environment(false, true, port));
+        Environment env = caching.loadEnv();
+        env.setServerPort(port);
+        env.setHost(false);
+        env.setOrdersMode(true);
+        caching.saveEnv(env);
         networkManager.switchToClientMode(port);
     }
 

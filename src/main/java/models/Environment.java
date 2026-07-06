@@ -20,4 +20,6 @@ public class Environment {
     public String getServerAddress() { return serverAddress; }
     public void setServerAddress(String serverAddress) { this.serverAddress = serverAddress; }
     public void setServerPort(int serverPort) { this.serverPort = serverPort; }
+    public void setHost(boolean isHost) { this.isHost = isHost; }
+    public void setOrdersMode(boolean ordersMode) { this.ordersMode = ordersMode; }
 }
