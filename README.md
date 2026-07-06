@@ -21,8 +21,8 @@ EasyPOS follows a **Model / Service / Controller** pattern:
 
 ### Networking
 Devices operate in one of two modes configured at startup:
-- **Host mode** — runs a local HTTP server, acts as the source of truth for orders
-- **Client mode** — POSTs order changes to the host after every mutation
+- **Host mode**: Runs a local HTTP server, acts as the source of truth for orders
+- **Client mode**: POSTs order changes to the host after every mutation
 
 > Known limitation: simultaneous writes from two clients can cause a race condition where one client's changes overwrite the other's. This is a known issue, the fix is to move from full-list syncing to individual operation syncing (ADD/MODIFY/REMOVE per order by UUID). This is documented in the code and planned for a future update.
 
@@ -74,3 +74,4 @@ Within each class, methods follow this order:
 4. Helpers
 5. Getters
 6. Setters
+> In some cases this is not the order but these have been commented with their reasons
