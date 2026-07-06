@@ -2,9 +2,13 @@ package server;
 
 import server.Server;
 import services.CacheService;
+import services.HomeService;
+
+import java.util.ArrayList;
 
 public class NetworkManager {
     private static NetworkManager instance;
+    private HomeService homeService = HomeService.getInstance();
 
     private final CacheService cacheService;
     private Server localServerInstance;
@@ -56,6 +60,7 @@ public class NetworkManager {
     public synchronized void switchToClientMode(int centralServerPort) {
         String centralServerIp = cacheService.loadEnv().getServerAddress();
         String fullUrl = "http://" + centralServerIp + ":" + cacheService.loadEnv().getServerPort();
+        homeService.updateOrdersFromHost(new ArrayList<>());
 
         System.out.println("Switching to client mode. Connecting to: " + fullUrl);
 
