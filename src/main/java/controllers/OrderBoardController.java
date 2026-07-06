@@ -10,10 +10,19 @@ import javafx.stage.Stage;
 import models.Order;
 import models.OrderItem;
 
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class OrderBoardController extends BaseOrderController {
     @FXML private ScrollPane orderScrollPane;
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        homeService.setOnOrdersUpdated(this::renderOrders);
+        renderOrders();
+    }
 
     @Override
     protected List<Order> getOrdersToDisplay() {

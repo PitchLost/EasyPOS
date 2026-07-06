@@ -18,14 +18,16 @@ EasyPOS follows a **Model / Service / Controller** pattern:
 - **Controllers** (`controllers/`): JavaFX FXML controllers, one per screen.
 - **Server** (`server/`): Local HTTP server with individual handlers.
 - (FXML files can be found in main/resources/FXML)
-
 ### Networking
 Devices operate in one of two modes configured at startup:
-- **Host mode**: Runs a local HTTP server, acts as the source of truth for orders
-- **Client mode**: POSTs order changes to the host after every mutation
+- **Host mode**: Runs a local HTTP server, acts as the single source of truth for all order data
+- **Client mode**: Connects to the host and polls for order updates every 2 seconds via `GET /orders`
 
-> Known limitation: simultaneous writes from two clients can cause a race condition where one client's changes overwrite the other's. This is a known issue, the fix is to move from full-list syncing to individual operation syncing (ADD/MODIFY/REMOVE per order by UUID). This is documented in the code and planned for a future update.
+In this architecture, only the host can create or modify orders. Client devices (e.g. kitchen displays) are read-only and automatically reflect any changes made on the host.
 
+> **Known limitation:** the current polling interval is 2 seconds, meaning clients may briefly display stale data. A future improvement would be to replace polling with Server-Sent Events (SSE) for real-time push updates from the host.
+
+> **Known limitation:** if two host terminals run simultaneously and both modify orders, there is no conflict resolution, last write wins. The fix is to move from full-list syncing to individual operation syncing (ADD/MODIFY/REMOVE per order by UUID). This is documented in the code and planned for a future update. Along side full support for multiple HOSTS or a central order management system.
 ### Persistence
 All data is stored as JSON under `~/.easypos/`:
 - `menu.json` | Item list

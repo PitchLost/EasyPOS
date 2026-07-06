@@ -38,7 +38,7 @@ public class NetworkManager {
         }
 
         try {
-            // Instantiate and boot the server
+            // Boot the server
             localServerInstance = new Server(port, cacheService);
             localServerInstance.start();
 
@@ -55,22 +55,20 @@ public class NetworkManager {
      */
     public synchronized void switchToClientMode(int centralServerPort) {
         String centralServerIp = cacheService.loadEnv().getServerAddress();
-        System.out.println("Switching to client mode. Connecting to target address: " + centralServerIp);
+        String fullUrl = "http://" + centralServerIp + ":" + cacheService.loadEnv().getServerPort();
 
-        // If was previously hosting, kill the local server instantly (0 second delay)
+        System.out.println("Switching to client mode. Connecting to: " + fullUrl);
+
         if (localServerInstance != null) {
             localServerInstance.stop(0);
             localServerInstance = null;
         }
 
-        // Update network states
         isHostMode = false;
-        targetServerIp = centralServerIp;
+        targetServerIp = fullUrl;
 
         System.out.println("App is now running in CLIENT mode.");
-
-        // Tell the network client engine to start streaming data from the host
-        services.NetworkClient.getInstance().startListening(targetServerIp);
+        services.NetworkClient.getInstance().startListening(fullUrl);
     }
 
     /**

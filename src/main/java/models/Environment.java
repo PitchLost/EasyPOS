@@ -10,7 +10,7 @@ public class Environment {
         this.isHost = isHost;
         this.ordersMode = ordersMode;
         this.serverPort = serverPort;
-        this.serverAddress = "127.0.0.1:"+serverPort;
+        this.serverAddress = "127.0.0.1";
     }
 
     public boolean isHost() { return isHost; }

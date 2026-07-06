@@ -1,9 +1,13 @@
 package services;
 
+import models.Environment;
+import models.Order;
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
 public class NetworkClient {
@@ -21,44 +25,45 @@ public class NetworkClient {
     }
 
     /**
-     * Spawns an asynchronous background stream thread targeting the Host server.
+     * Creates an asynchronous background stream thread targeting the Host server.
      */
     public synchronized void startListening(String baseUrl) {
-        stopListening(); // Safety: Kill any lingering loops first
+        stopListening();
         shouldListen = true;
 
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(baseUrl + "/")) // Leave a trailing /
-                .header("Accept", "text/event-stream")
-                .GET()
-                .build();
+        System.out.println("NetworkClient: Starting poll loop to " + baseUrl);
 
-        System.out.println("NetworkClient: Opening real-time stream to " + baseUrl);
+        activeStreamFuture = CompletableFuture.runAsync(() -> {
+            HttpClient client = HttpClient.newHttpClient();
+            while (shouldListen) {
+                try {
+                    HttpRequest request = HttpRequest.newBuilder()
+                            .uri(URI.create(baseUrl + "/orders"))
+                            .GET()
+                            .build();
 
-        activeStreamFuture = client.sendAsync(request, HttpResponse.BodyHandlers.ofLines())
-                .thenAccept(response -> {
-                    response.body().forEach(line -> {
-                        // Halt instantly if the user disabled client mode mid-stream
-                        if (!shouldListen) return;
+                    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-                        if (line.startsWith("data: ")) {
-                            String jsonPayload = line.substring(6).trim();
-                            // Forward payload directly to HomeService data context
-                            HomeService.getInstance().handleServerUpdate(jsonPayload);
-                        }
-                    });
-                })
-                .exceptionally(ex -> {
-                    if (shouldListen) {
-                        System.err.println("NetworkClient: Connection dropped. Reconnecting in 5s...");
-                        try { Thread.sleep(5000); } catch (InterruptedException ignored) {}
-                        synchronized(this) {
-                            if (shouldListen) startListening(baseUrl);
-                        }
+                    if (response.statusCode() == 200) {
+                        com.google.gson.Gson gson = new com.google.gson.GsonBuilder()
+                                .registerTypeAdapter(java.time.LocalDateTime.class, new LocalDateTimeAdapter())
+                                .create();
+                        java.lang.reflect.Type listType = new com.google.gson.reflect.TypeToken<ArrayList<Order>>(){}.getType();
+                        ArrayList<Order> orders = gson.fromJson(response.body(), listType);
+                        HomeService.getInstance().updateOrdersFromHost(orders);
+                        System.out.println("NetworkClient: Orders updated from host.");
                     }
-                    return null;
-                });
+
+                    Thread.sleep(2000); // Poll every 2 seconds
+
+                } catch (Exception ex) {
+                    if (shouldListen) {
+                        System.err.println("NetworkClient: Poll failed, retrying in 5s...");
+                        try { Thread.sleep(5000); } catch (InterruptedException ignored) {}
+                    }
+                }
+            }
+        });
     }
 
     /**

@@ -12,8 +12,8 @@ public class Server {
     private final HttpServer httpServer;
 
     public Server(int port, CacheService cacheService) throws IOException {
-        // Use 0.0.0.0 so other devices on the Wi-Fi network can connect
-        this.httpServer = HttpServer.create(new InetSocketAddress("localhost", port), 0);
+        // Use 0.0.0.0 so other devices on the Wi-Fi network can connect. Localhost does not work
+        this.httpServer = HttpServer.create(new InetSocketAddress("0.0.0.0", port), 0);
 
         this.httpServer.createContext("/", new RootHandler());
         this.httpServer.createContext("/orders", new OrderHandler(cacheService));

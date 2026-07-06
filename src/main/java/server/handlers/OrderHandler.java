@@ -20,8 +20,7 @@ public class OrderHandler extends BaseHandler {
     // Replicate the exact Gson setup here that CahceService has so timestamps serialize correctly
     private final Gson gson = new GsonBuilder()
             .setPrettyPrinting()
-            .registerTypeAdapter(LocalDateTime.class, (com.google.gson.JsonSerializer<LocalDateTime>)
-                    (src, type, ctx) -> new com.google.gson.JsonPrimitive(src.toString()))
+            .registerTypeAdapter(LocalDateTime.class, new services.LocalDateTimeAdapter())
             .create();
 
     // The constructor forces the server to give this handler the CacheService instance
