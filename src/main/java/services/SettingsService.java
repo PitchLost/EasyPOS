@@ -22,4 +22,11 @@ public class SettingsService {
         caching.saveEnv(new Environment(false, true, port));
         networkManager.switchToClientMode(port);
     }
+
+    public void saveServerAddress(String ip, int port) {
+        Environment env = caching.loadEnv();
+        env.setServerAddress(ip);
+        env.setServerPort(port);
+        caching.saveEnv(env);
+    }
 }

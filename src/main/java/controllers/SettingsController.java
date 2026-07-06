@@ -5,10 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import services.SettingsService;
@@ -23,6 +20,7 @@ public class SettingsController implements Initializable {
     SettingsService settingsService = new SettingsService();
 
     @FXML private Button settingsToHome;
+    @FXML private Label serverStatus;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -81,31 +79,51 @@ public class SettingsController implements Initializable {
 
         dialog.showAndWait().ifPresent(name -> {
             settingsService.enterHostMode(Integer.parseInt(name));
+            try {
+                serverStatus.setText("Server: Running\nDevice IP: " + java.net.InetAddress.getLocalHost().getHostAddress()+"\nPort: " + name);
+            } catch (java.net.UnknownHostException e) {
+                serverStatus.setText("Server running. Could not determine IP.");
+            }
         });
     }
 
     @FXML
     public void startOrdersMode() {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Connect to different device");
-        dialog.setHeaderText("Server Port");
-        dialog.setContentText("Port to run on:");
-        // Set to 8000 by default
-        dialog.initOwner(settingsToHome.getScene().getWindow());
+        // Step 1: Get the host IP
+        TextInputDialog ipDialog = new TextInputDialog("192.168.1.x");
+        ipDialog.setTitle("Connect to Host");
+        ipDialog.setHeaderText("Host IP Address");
+        ipDialog.setContentText("Enter the host device's IP address:");
+        ipDialog.initOwner(settingsToHome.getScene().getWindow());
 
-        dialog.showAndWait().ifPresent(name -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Enter Orders Mode");
-            alert.setHeaderText("Switch to orders mode?");
-            alert.setContentText("This will enter the orders mode. You will not be able to create/manage orders from this mode");
-            alert.initOwner(settingsToHome.getScene().getWindow());
+        ipDialog.showAndWait().ifPresent(ip -> {
+            if (ip.isBlank()) return;
 
-            alert.showAndWait().ifPresent(response -> {
-                if (response == ButtonType.OK) {
-                    Stage stage = (Stage) settingsToHome.getScene().getWindow();
-                    NavigationController.navigateTo(stage, "/FXML/orders2.fxml");
-                    settingsService.enterOrdersMode(Integer.parseInt(name));
-                }
+            // Step 2: Get the port
+            TextInputDialog portDialog = new TextInputDialog("1000");
+            portDialog.setTitle("Connect to Host");
+            portDialog.setHeaderText("Host Port");
+            portDialog.setContentText("Enter the host port:");
+            portDialog.initOwner(settingsToHome.getScene().getWindow());
+
+            portDialog.showAndWait().ifPresent(port -> {
+                if (port.isBlank()) return;
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Enter Orders Mode");
+                alert.setHeaderText("Connect to " + ip + ":" + port + "?");
+                alert.setContentText("This will enter orders mode. You will not be able to create or manage orders from this device.");
+                alert.initOwner(settingsToHome.getScene().getWindow());
+
+                alert.showAndWait().ifPresent(response -> {
+                    if (response == ButtonType.OK) {
+                        // Save the IP and port to environment before switching
+                        settingsService.saveServerAddress(ip, Integer.parseInt(port));
+                        Stage stage = (Stage) settingsToHome.getScene().getWindow();
+                        NavigationController.navigateTo(stage, "/FXML/orders2.fxml");
+                        settingsService.enterOrdersMode(Integer.parseInt(port));
+                    }
+                });
             });
         });
     }

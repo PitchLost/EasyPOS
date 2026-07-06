@@ -6,6 +6,7 @@ public class Environment {
     int serverPort = 8000;
     String serverAddress;
 
+
     public Environment(boolean isHost, boolean ordersMode, int serverPort) {
         this.isHost = isHost;
         this.ordersMode = ordersMode;
@@ -17,4 +18,6 @@ public class Environment {
     public boolean isOrdersMode() { return ordersMode; }
     public int getServerPort() { return serverPort; }
     public String getServerAddress() { return serverAddress; }
+    public void setServerAddress(String serverAddress) { this.serverAddress = serverAddress; }
+    public void setServerPort(int serverPort) { this.serverPort = serverPort; }
 }

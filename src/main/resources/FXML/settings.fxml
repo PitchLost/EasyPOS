@@ -81,6 +81,7 @@
                </Button>
             </children>
          </HBox>
+         <Label fx:id="serverStatus" style="-fx-text-fill: white; -fx-font-size: 35; -fx-font-weight: bold;" text="Server Not Running" />
 
         </VBox>
     </center>
