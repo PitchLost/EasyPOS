@@ -4,7 +4,14 @@ A point-of-sale system built in Java/JavaFX for the hospitality industry or simi
 Built as a personal project to deepen my understanding of Java OOP, REST architecture, and JavaFX. It is the largest non-university Java project I've undertaken.
 
 ## Installation
-TODO
+
+### Source Code:
+1. Download the source code by either
+   a. Cloning the repository with the command `git clone https://github.com/PitchLost/EasyPOS.git`
+   b. Downloading the zip from GitHub and extracting at the desired location
+2. Open a terminal in the location of the newly created folder
+3. Run the command `./gradlew run` this will open a new EasyPos window
+4. To build it into a jar file, just run `.gradlew jar` and the jar file will be created at `build/libs`
 
 ## Setup Guide
 - On launch, EasyPOS opens to the home screen
