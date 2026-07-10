@@ -5,13 +5,23 @@ Built as a personal project to deepen my understanding of Java OOP, REST archite
 
 ## Installation
 
-### Source Code:
-1. Download the source code by either
-   a. Cloning the repository with the command `git clone https://github.com/PitchLost/EasyPOS.git`
-   b. Downloading the zip from GitHub and extracting at the desired location
-2. Open a terminal in the location of the newly created folder
-3. Run the command `./gradlew run` this will open a new EasyPos window
-4. To build it into a jar file, just run `.gradlew jar` and the jar file will be created at `build/libs`
+### Running from Release (Windows):
+1. Go to the [Releases](https://github.com/PitchLost/EasyPOS/releases) page and download the latest `.zip`
+2. Extract the zip to your desired location
+3. Open the extracted folder and double click `EasyPOS.exe`
+4. If Windows SmartScreen blocks it, click **More info** → **Run anyway**, this is normal for unsigned open source software
+
+### Running from Source Code:
+1. Download the source code by either:
+   - Cloning the repository: `git clone https://github.com/PitchLost/EasyPOS.git`
+   - Downloading the zip from GitHub and extracting at the desired location
+2. Open a terminal in the newly created folder
+3. Run `./gradlew run` to launch EasyPOS
+4. To build a jar file run `./gradlew jar`. The output will be at `build/libs/`
+
+### Requirements (Source only):
+- Java 21 or later [Download here](https://adoptium.net)
+- No additional dependencies needed. Gradle handles everything automatically
 
 ## Setup Guide
 - On launch, EasyPOS opens to the home screen
