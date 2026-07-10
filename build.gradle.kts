@@ -10,7 +10,7 @@ javafx {
 }
 
 application {
-    mainClass.set("App")
+    mainClass.set("app.App")
 }
 
 group = "org.example"
@@ -27,16 +27,6 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
 }
 
-tasks.jar {
-    manifest {
-        attributes["Main-Class"] = "App"
-    }
-    from({
-        configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) }
-    })
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
-
 tasks.register<Exec>("jpackageTask") {
     dependsOn("installDist")
     commandLine(
@@ -44,7 +34,7 @@ tasks.register<Exec>("jpackageTask") {
         "--type", "app-image",
         "--input", "build/install/EasyPOS/lib",
         "--main-jar", "EasyPOS-1.0.0.jar",
-        "--main-class", "App",
+        "--main-class", "app.App",
         "--name", "EasyPOS",
         "--app-version", "1.0.0",
         "--vendor", "Johnny Anderson",
