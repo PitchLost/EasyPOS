@@ -20,6 +20,7 @@ public class Server {
         this.httpServer.setExecutor(null);
     }
 
+    /** Starts the server */
     public void start() {
         this.httpServer.start();
         System.out.println("Local server started: address:" + httpServer.getAddress());

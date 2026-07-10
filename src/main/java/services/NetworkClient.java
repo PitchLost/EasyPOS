@@ -10,6 +10,13 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Handles the client-side network polling loop for receiving order updates from the host server.
+ * Runs as a background thread, periodically polling the host's {@code /orders} endpoint every 2 seconds
+ * and forwarding any updates directly into {@link HomeService}.
+ * Implemented as a singleton since only one polling loop should ever be active at a time.
+ * Use {@link #startListening(String)} to begin polling and {@link #stopListening()} to tear it down cleanly.
+ */
 public class NetworkClient {
     private static NetworkClient instance;
     private CompletableFuture<Void> activeStreamFuture = null;

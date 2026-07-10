@@ -14,7 +14,7 @@ application {
 }
 
 group = "org.example"
-version = "1.0-SNAPSHOT"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -35,6 +35,24 @@ tasks.jar {
         configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) }
     })
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.register<Exec>("jpackageTask") {
+    dependsOn("installDist")
+    commandLine(
+        "jpackage",
+        "--type", "app-image",
+        "--input", "build/install/EasyPOS/lib",
+        "--main-jar", "EasyPOS-1.0.0.jar",
+        "--main-class", "App",
+        "--name", "EasyPOS",
+        "--app-version", "1.0.0",
+        "--vendor", "Johnny Anderson",
+        "--dest", "build/jpackage",
+        "--java-options", "--module-path \$APPDIR",
+        "--java-options", "--add-modules=javafx.controls,javafx.fxml,javafx.graphics",
+        "--runtime-image", System.getenv("JAVA_HOME")
+    )
 }
 
 tasks.test {
