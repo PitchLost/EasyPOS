@@ -1,5 +1,3 @@
-**STILL A MAJOR WORK IN PROGRESS**
-
 # EasyPOS
 A point-of-sale system built in Java/JavaFX for the hospitality industry or similar. Supports multiple terminals communicating over a locally-run HTTP server, with persistent storage via JSON serialisation.
 
