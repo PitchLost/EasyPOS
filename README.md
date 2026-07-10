@@ -79,11 +79,17 @@ Within each class, methods follow this order:
 > In some cases this is not the order but these have been commented with their reasons
 
 ## Screenshots
+### Home/Main Screen
 <img width="1919" height="1030" alt="image" src="https://github.com/user-attachments/assets/cd0e40d4-d4f4-431f-99ad-f3801823b809" />
+### Order selection screen
 <img width="1906" height="1018" alt="image" src="https://github.com/user-attachments/assets/bdec6ec7-e48a-47a8-878e-6ff7e6391049" />
+### Settings
 <img width="1915" height="1027" alt="image" src="https://github.com/user-attachments/assets/42d04a31-0098-4f79-bee1-82b5931a46bb" />
+### Manage Categories
 <img width="1916" height="1029" alt="image" src="https://github.com/user-attachments/assets/b69e7ba9-6333-4a09-bdbd-310c50fd0f67" />
+### Manage Items
 <img width="1906" height="1030" alt="image" src="https://github.com/user-attachments/assets/3de65449-cfda-4996-bce8-dc655110ef32" />
+### Connection to local server for an orders tablet
 <img width="1914" height="1025" alt="image" src="https://github.com/user-attachments/assets/46c28a95-4e1c-46d0-821a-68d388296b0d" />
 
 
