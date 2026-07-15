@@ -52,7 +52,7 @@ In this architecture, only the host can create or modify orders. Client devices 
 
 > **Known limitation:** the current polling interval is 2 seconds, meaning clients may briefly display stale data. A future improvement would be to replace polling with Server-Sent Events (SSE) for real-time push updates from the host.
 
-> **Known limitation:** if two host terminals run simultaneously and both modify orders, there is no conflict resolution, last write wins. The fix is to move from full-list syncing to individual operation syncing (ADD/MODIFY/REMOVE per order by UUID). This is documented in the code and planned for a future update. Along side full support for multiple HOSTS or a central order management system.
+> **Planned Upgrade:** At the moment, you can only have one Host and (theoratically) as many order recievers (Clients) as you need. But in the future I will make it so there is still only one Host but each connected Client has the option to either be an order reciever or another POS. To do this some queue implementation will need to be put in place to handle requests from multiple Clients simultaniously. This is planned for release 2.0
 
 ### Persistence
 All data is stored as JSON under `~/.easypos/`:
