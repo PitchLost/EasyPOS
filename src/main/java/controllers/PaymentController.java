@@ -1,16 +1,15 @@
 package controllers;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import models.Order;
+import services.CacheService;
 import services.HomeService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
-import javafx.scene.control.Button;
+import services.MoneyButtons;
 import services.PaymentService;
 
 import java.math.BigDecimal;
@@ -21,6 +20,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class PaymentController implements Initializable {
+    CacheService caching = new CacheService();
+    HomeService home = new HomeService();
     PaymentService paymentService;
     HomeService homeService =  HomeService.getInstance();
     Order activeOrder = homeService.getActiveOrder();
@@ -29,6 +30,7 @@ public class PaymentController implements Initializable {
     ArrayList<String> noteButtons;
 
     BigDecimal totalDue;
+    private BigDecimal lastCustomAmount = BigDecimal.ZERO;
 
     // FXML elements
     @FXML private Label totalDueLabel;
@@ -39,6 +41,7 @@ public class PaymentController implements Initializable {
     @FXML private Label orderStatusLabel;
     @FXML private Label orderName;
     @FXML private Button markOrderCompleteButton;
+    @FXML private TextField customAmountInput;
 
 
     // Init, Sets some default values and placeholder values for FXML elements
@@ -46,17 +49,44 @@ public class PaymentController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         coinButtons = new ArrayList<>(List.of("0.10", "0.20", "0.50", "1.00", "2.00")); // Default values, may or may not be overridden by caching
         noteButtons = new ArrayList<>(List.of("5", "10", "20", "50", "100"));
+        getMoneyButtons();
         renderItems();
     }
 
 
     // HANDLERS:
 
+    // Get the coin/note buttons from cache and set the local fields if needed
+    private void getMoneyButtons() {
+        MoneyButtons savedMoneyButtons = caching.loadMoneyButtons();
+        if (savedMoneyButtons == null) return; // no saved buttons, keep the defaults
+        coinButtons = savedMoneyButtons.getCoinButtons();
+        noteButtons = savedMoneyButtons.getNoteButtons();
+    }
+
     // Render items on the GUI
     private void renderItems() {
         coinPane.getChildren().clear();
         updateCompleteButton();
         orderName.setText(activeOrder.getOrderName());
+
+
+
+        customAmountInput.setOnAction(e -> {
+            String customAmount = customAmountInput.getText();
+            if (customAmount.isEmpty() || !customAmount.matches("\\d+(\\.\\d+)?")) return;
+
+            BigDecimal newCustom = new BigDecimal(customAmount);
+
+            // Subtract the previous custom amount first, then add the new one
+            BigDecimal currentPayed = new BigDecimal(paymentPayed.getText());
+            BigDecimal adjusted = currentPayed.subtract(lastCustomAmount).add(newCustom);
+
+            paymentPayed.setText(adjusted.setScale(2, RoundingMode.HALF_UP).toString());
+            paymentRemaining.setText(totalDue.subtract(adjusted).setScale(2, RoundingMode.HALF_UP).toString());
+
+            lastCustomAmount = newCustom;
+        });
 
 
         // This could probs be one loop but ah well
@@ -107,6 +137,8 @@ public class PaymentController implements Initializable {
         BigDecimal remaining = totalDue.subtract(newPayed);
         paymentRemaining.setText(remaining.setScale(2, RoundingMode.HALF_UP).toString());
     }
+
+
     // FXML:
 
     @FXML
@@ -164,11 +196,12 @@ public class PaymentController implements Initializable {
     /** Sets the payment service, this way we dont have to pass paymentServices around different stages */
     public void setPaymentService(PaymentService paymentService) {
         this.paymentService = paymentService;
-        this.totalDue = paymentService.getTotalDue(); // actually grab it
+        this.totalDue = paymentService.getTotalDue();
         this.activeOrder = paymentService.getActiveOrder();
         totalDueLabel.setText(convertToMoney(totalDue));
         paymentPayed.setText("0.00");
         paymentRemaining.setText(totalDue.setScale(2, RoundingMode.HALF_UP).toString());
+        lastCustomAmount = BigDecimal.ZERO;
     }
 
 

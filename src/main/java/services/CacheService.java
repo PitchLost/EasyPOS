@@ -28,7 +28,9 @@ public class CacheService {
     private static final String ORDERS_FILE = DATA_DIR + "orders.json";
     private static final String OLD_ORDERS_FILE = DATA_DIR + "old_orders.json";
     private static final String CATEGORIES_FILE = DATA_DIR + "categories.json";
+    private static final String MONEY_BUTTONS_FILE = DATA_DIR + "money_buttons.json";
     private static final String ENVIRONMENT_FILE = DATA_DIR + "environment.json";
+
 
     // A simple one lined delceration of GSON turned into this mess to handle the timestamping
     private final Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()).create();
@@ -189,6 +191,9 @@ public class CacheService {
     // TODO: Add some sort of large order archive that stores every previous order
     // CATEGORIES:
 
+    /** Saves the categories to the disk as an ArrayList
+     * @param categories The categories to save*/
+
     public void saveCategories(ArrayList<String> categories) {
         try {
             ensureDataDirExists();
@@ -200,6 +205,8 @@ public class CacheService {
         }
     }
 
+    /** Loads the categories ArrayList from the disk
+     * @return Saved Categories*/
     public ArrayList<String> loadCategories() {
         try {
             if (!Files.exists(Paths.get(CATEGORIES_FILE))) return new ArrayList<>();
@@ -252,7 +259,66 @@ public class CacheService {
         saveCategories(categories);
     }
 
+    /** Saves the MoneyButtons to the disk
+     * @param buttons The MoneyButtons to save */
+    public void saveMoneyButtons(MoneyButtons buttons) {
+        try {
+            ensureDataDirExists();
+            Files.writeString(Paths.get(MONEY_BUTTONS_FILE), gson.toJson(buttons));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    /** Loads the MoneyButtons from disk
+     * @return The MoneyButtons saved on the disk*/
+    public MoneyButtons loadMoneyButtons() {
+        try {
+            if (!Files.exists(Paths.get(MONEY_BUTTONS_FILE))) return null;
+            String json = Files.readString(Paths.get(MONEY_BUTTONS_FILE));
+            return gson.fromJson(json, MoneyButtons.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /** Adds a new button to either the coin or note list.
+     * @param type either "COIN" or "NOTE"
+     * @param value the value to add as a {@link String} e.g. "0.50" or "20" */
+    public void addMoneyButton(String type, String value) {
+        MoneyButtons buttons = loadMoneyButtons();
+        if (buttons == null) buttons = new MoneyButtons(new ArrayList<>(), new ArrayList<>());
+
+        if (type.equals("COIN")) {
+            if (!buttons.getCoinButtons().contains(value)) buttons.getCoinButtons().add(value);
+        } else if (type.equals("NOTE")) {
+            if (!buttons.getNoteButtons().contains(value)) buttons.getNoteButtons().add(value);
+        }
+
+        saveMoneyButtons(buttons);
+    }
+
+    /** Removes a button from either the coin or note list.
+     * @param type either "COIN" or "NOTE"
+     * @param value the value to remove as a {@link String} */
+    public void deleteMoneyButton(String type, String value) {
+        MoneyButtons buttons = loadMoneyButtons();
+        if (buttons == null) return;
+
+        if (type.equals("COIN")) {
+            buttons.getCoinButtons().remove(value);
+        } else if (type.equals("NOTE")) {
+            buttons.getNoteButtons().remove(value);
+        }
+
+        saveMoneyButtons(buttons);
+    }
+
+    /**
+     * Saves a given {@link Environment} object to the disk for future use.
+     * @param env Enviroment object to save
+     */
     public void saveEnv(Environment env) {
         try {
             ensureDataDirExists();
@@ -264,6 +330,10 @@ public class CacheService {
         }
     }
 
+    /**
+     * Loads and returns the saved enviroment from disk.
+     * @return {@link Environment} object either pulled from disk or a new default one
+     */
     public Environment loadEnv() {
         try {
             if (!Files.exists(Paths.get(ENVIRONMENT_FILE))) return new Environment(false, false, 8000);

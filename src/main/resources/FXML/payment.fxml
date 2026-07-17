@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane style="-fx-background-color: #152645;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PaymentController">
+<BorderPane style="-fx-background-color: #152645;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PaymentController">
 
    <top>
       <VBox alignment="CENTER" style="-fx-padding: 24; -fx-spacing: 8;">
@@ -34,6 +31,7 @@
 
          <Label style="-fx-text-fill: white; -fx-font-size: 39; -fx-font-weight: bold;" text="Coins" />
          <HBox fx:id="coinPane" alignment="CENTER" maxWidth="Infinity" spacing="10" style="-fx-background-color: #0b111c; -fx-padding: 12; -fx-min-height: 80;" />
+         <TextField fx:id="customAmountInput" maxWidth="150.0" prefHeight="23.0" prefWidth="200.0" promptText="Custom Amount" />
 
          <HBox alignment="CENTER" spacing="12">
             <Label style="-fx-text-fill: white; -fx-font-size: 27; -fx-font-weight: bold;" text="Paid:" />
