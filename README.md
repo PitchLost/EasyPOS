@@ -5,13 +5,23 @@ Built as a personal project to deepen my understanding of Java OOP, REST archite
 
 ## Installation
 
-### Source Code:
-1. Download the source code by either
-   a. Cloning the repository with the command `git clone https://github.com/PitchLost/EasyPOS.git`
-   b. Downloading the zip from GitHub and extracting at the desired location
-2. Open a terminal in the location of the newly created folder
-3. Run the command `./gradlew run` this will open a new EasyPos window
-4. To build it into a jar file, just run `.gradlew jar` and the jar file will be created at `build/libs`
+### Running from Release (Windows):
+1. Go to the [Releases](https://github.com/PitchLost/EasyPOS/releases) page and download the latest `.zip`
+2. Extract the zip to your desired location
+3. Open the extracted folder and double click `EasyPOS.exe`
+4. If Windows SmartScreen blocks it, click **More info** → **Run anyway**, this is normal for unsigned open source software
+
+### Running from Source Code:
+1. Download the source code by either:
+   - Cloning the repository: `git clone https://github.com/PitchLost/EasyPOS.git`
+   - Downloading the zip from GitHub and extracting at the desired location
+2. Open a terminal in the newly created folder
+3. Run `./gradlew run` to launch EasyPOS
+4. To build a jar file run `./gradlew jar`. The output will be at `build/libs/`
+
+### Requirements (Source only):
+- Java 21 or later [Download here](https://adoptium.net)
+- No additional dependencies needed. Gradle handles everything automatically
 
 ## Setup Guide
 - On launch, EasyPOS opens to the home screen
@@ -42,7 +52,7 @@ In this architecture, only the host can create or modify orders. Client devices 
 
 > **Known limitation:** the current polling interval is 2 seconds, meaning clients may briefly display stale data. A future improvement would be to replace polling with Server-Sent Events (SSE) for real-time push updates from the host.
 
-> **Known limitation:** if two host terminals run simultaneously and both modify orders, there is no conflict resolution, last write wins. The fix is to move from full-list syncing to individual operation syncing (ADD/MODIFY/REMOVE per order by UUID). This is documented in the code and planned for a future update. Along side full support for multiple HOSTS or a central order management system.
+> **Planned Upgrade:** At the moment, you can only have one Host and (theoratically) as many order recievers (Clients) as you need. But in the future I will make it so there is still only one Host but each connected Client has the option to either be an order reciever or another POS. To do this some queue implementation will need to be put in place to handle requests from multiple Clients simultaniously. This is planned for release 2.0
 
 ### Persistence
 All data is stored as JSON under `~/.easypos/`:
