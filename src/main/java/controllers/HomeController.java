@@ -40,6 +40,7 @@ public class HomeController implements Initializable {
     @FXML private Label orderTotalLabel;
     @FXML private HBox categoryContainer;
     @FXML private Label OrderNameLabel;
+    @FXML private Label OrderPaidStatusLabel;
 
 
     @Override
@@ -141,12 +142,13 @@ public class HomeController implements Initializable {
         }
     }
 
-    // Render order items
+    // Render order items and since by this point the order is loaded all the other FXML stuff dependant on some order fields
     private void renderOrderItems() {
         homeService.recalculateTotal(); // Ensure the total has been calculated since loading the orders from cache
         orderTotalLabel.setText(convertToMoney(homeService.getTotal()));
         OrderNameLabel.setText(homeService.getActiveOrder().getOrderName());
         orderContainer.getChildren().clear();
+        OrderPaidStatusLabel.setText(homeService.getActiveOrder().getOrderCompleted() ? "Paid" : "Not Paid");
 
         // Create a clickable pane for each orderItem
         for (OrderItem item : homeService.getCurrentOrderItems()) {
