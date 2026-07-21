@@ -23,6 +23,10 @@ Built as a personal project to deepen my understanding of Java OOP, REST archite
 - Java 21 or later [Download here](https://adoptium.net)
 - No additional dependencies needed. Gradle handles everything automatically
 
+## Video Guides
+- Initial Setup: https://youtu.be/Qpdsq3gUYM0
+- Use Tutorial: https://youtu.be/yDSYja-RA7g
+- Multi Device Tutorial: https://youtu.be/EItaAcJvKlQ
 ## Setup Guide
 - On launch, EasyPOS opens to the home screen
 - Navigate to **Settings** → **Manage Categories** to add your categories
